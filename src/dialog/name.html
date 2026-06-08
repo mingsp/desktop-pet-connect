@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>给桌宠起名字</title>
+    <link rel="stylesheet" href="./name.css" />
+  </head>
+  <body>
+    <main>
+      <h1>给桌宠起名字</h1>
+      <label for="petName">名字</label>
+      <input id="petName" maxlength="24" autocomplete="off" />
+      <p id="hint">最多 24 个字符，会显示在桌宠下方。</p>
+      <footer>
+        <button id="cancel" type="button">取消</button>
+        <button id="save" type="button">保存</button>
+      </footer>
+    </main>
+    <script src="./name.js"></script>
+  </body>
+</html>

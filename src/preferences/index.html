@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' file:; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; script-src 'self';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>桌面陪伴</title>
+    <link rel="stylesheet" href="./preferences.css" />
+  </head>
+  <body>
+    <div class="app">
+      <nav class="sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-logo">✦</span>
+          <div>
+            <strong class="sidebar-title">Desktop Pet</strong>
+            <span class="sidebar-sub">Connect</span>
+          </div>
+        </div>
+        <div class="sidebar-nav">
+          <button class="sidebar-item active" type="button" data-tab="home">
+            <span class="sidebar-item-icon">♥</span>
+            <span class="sidebar-item-label">关系主页</span>
+          </button>
+          <button class="sidebar-item" type="button" data-tab="diy">
+            <span class="sidebar-item-icon">✦</span>
+            <span class="sidebar-item-label">制作形象</span>
+          </button>
+          <button class="sidebar-item" type="button" data-tab="messages">
+            <span class="sidebar-item-icon">✉</span>
+            <span class="sidebar-item-label">消息</span>
+          </button>
+          <div class="sidebar-sep"></div>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="connect" data-advanced="true">
+            <span class="sidebar-item-icon">⇌</span>
+            <span class="sidebar-item-label">连接细节</span>
+          </button>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="privacy" data-advanced="true">
+            <span class="sidebar-item-icon">⊡</span>
+            <span class="sidebar-item-label">隐私</span>
+          </button>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="library" data-advanced="true">
+            <span class="sidebar-item-icon">⊞</span>
+            <span class="sidebar-item-label">形象库</span>
+          </button>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="profile" data-advanced="true">
+            <span class="sidebar-item-icon">✿</span>
+            <span class="sidebar-item-label">档案</span>
+          </button>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="interaction" data-advanced="true">
+            <span class="sidebar-item-icon">↺</span>
+            <span class="sidebar-item-label">互动</span>
+          </button>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="weather" data-advanced="true">
+            <span class="sidebar-item-icon">☁</span>
+            <span class="sidebar-item-label">天气</span>
+          </button>
+          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="behavior" data-advanced="true">
+            <span class="sidebar-item-icon">⚙</span>
+            <span class="sidebar-item-label">行为</span>
+          </button>
+        </div>
+        <div class="sidebar-footer">
+          <button id="advancedModeButton" class="adv-btn" type="button">高级设置</button>
+        </div>
+      </nav>
+      <div class="content-shell">
+        <header class="content-header">
+          <p id="activePetText" class="header-sub">把一个真实的人放到桌面上陪你</p>
+          <button id="saveButton" class="btn-primary" type="button">保存</button>
+        </header>
+        <div class="content-scroll">
+          <form id="settingsForm">
+            <section class="panel home-panel active" data-panel="home">
+              <div class="home-hero">
+                <div class="home-identity">
+                  <figure class="home-avatar-frame">
+                    <img id="homeCompanionImage" src="../../assets/pets/pixel-girl-2/preview.png" alt="桌面陪伴预览" />
+                  </figure>
+                  <div>
+                    <p class="eyebrow">Relationship Home</p>
+                    <h2 id="homeCompanionName">还没有添加关系对象</h2>
+                    <p id="homeCompanionMeta" class="home-meta">先和朋友互换邀请码，把对方做成桌面陪伴。</p>
+                    <p id="homeCompanionNote" class="home-note">这里应该只保留朋友最常用的动作。</p>
+                    <div class="home-presence-list" aria-label="关系状态摘要">
+                      <span>
+                        <strong id="homeRelationDetail">等待添加</strong>
+                        <small>关系</small>
+                      </span>
+                      <span>
+                        <strong id="homeConnectionDetail">未连接</strong>
+                        <small>连接</small>
+                      </span>
+                      <span>
+                        <strong id="homeAvatarDetail">未制作</strong>
+                        <small>形象</small>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="home-hero-side">
+                    <span id="homeConnectionBadge" class="status-badge" data-state="disconnected">未连接</span>
+                    <p id="homeSyncText">桌面陪伴服务准备中</p>
+                  </div>
+                </div>
+
+                <div class="home-grid">
+                  <article class="settings-card home-message-card">
+                    <div class="card-title-row">
+                      <h3>给对方发一句话</h3>
+                      <strong id="homeMessageCount">0/140</strong>
+                    </div>
+                    <label>
+                      <span>发送给</span>
+                      <select id="homeFriendSelect"></select>
+                    </label>
+                    <label>
+                      <span>短消息</span>
+                      <textarea id="homeMessageInput" rows="4" maxlength="140" placeholder="写一句会从你的桌面陪伴发出的短消息"></textarea>
+                    </label>
+                    <div id="homeQuickMessages" class="quick-message-row" aria-label="快捷消息">
+                      <button type="button" data-message="想你啦，来看看我的桌面。">想你啦</button>
+                      <button type="button" data-message="今天也辛苦了，记得休息一下。">辛苦啦</button>
+                      <button type="button" data-message="我在这边陪你，慢慢来。">我在</button>
+                      <button type="button" data-message="加油，结束后我们聊聊。">加油</button>
+                    </div>
+                    <p id="homeRecentMessageText" class="home-recent-message">最近消息会出现在这里。</p>
+                    <div class="inline right">
+                      <button id="homeSendButton" class="btn-primary send-action" type="button">发送</button>
+                    </div>
+                  </article>
+
+                  <article class="settings-card home-connect-card">
+                    <div class="card-title-row">
+                      <h3>添加重要的人</h3>
+                      <button id="homeConnectButton" class="btn-secondary" type="button">连接</button>
+                    </div>
+                    <label>
+                      <span>我的邀请码</span>
+                      <div class="input-action">
+                        <input id="homeInviteCodeInput" type="text" readonly />
+                        <button id="homeCopyInviteButton" class="icon-action" type="button">复制</button>
+                      </div>
+                    </label>
+                    <div class="inline">
+                      <button id="homeCreateInviteButton" class="btn-primary" type="button">生成邀请码</button>
+                    </div>
+                    <label>
+                      <span>输入对方邀请码</span>
+                      <div class="input-action">
+                        <input id="homeAcceptInviteInput" type="text" maxlength="32" placeholder="例如 LENA-MOCHI-7X3K" />
+                        <button id="homeAcceptInviteButton" class="btn-primary" type="button">添加</button>
+                      </div>
+                    </label>
+                  </article>
+
+                  <article class="settings-card home-avatar-card">
+                    <div class="card-title-row">
+                      <h3>把对方做成桌面陪伴</h3>
+                      <span class="dev-badge">DIY</span>
+                    </div>
+                    <p class="field-note">选择或导入一个能代表对方的形象，再绑定到这个关系对象。后续 gpt-image2 生成结果也从这里进入。</p>
+                    <div class="inline">
+                      <button id="homeMakeAvatarButton" class="btn-primary" type="button">制作形象</button>
+                      <button id="homeImportAvatarButton" class="btn-secondary" type="button">导入形象...</button>
+                    </div>
+                  </article>
+
+                  <article class="settings-card home-quiet-card">
+                    <div class="card-title-row">
+                      <h3>安静边界</h3>
+                    </div>
+                    <label class="switch switch-card">
+                      <input id="homeQuietInput" type="checkbox" />
+                      <span>
+                        <strong>专注时不弹气泡</strong>
+                        <small>连接不断开，消息会留在记录里</small>
+                      </span>
+                    </label>
+                    <div class="inline">
+                      <button id="homeOpenMessagesButton" class="btn-secondary" type="button">查看消息</button>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="panel" data-panel="profile">
+              <div class="section">
+                <p class="section-title">陪伴档案</p>
+                <div class="section-rows">
+                  <label class="row" for="petNameInput">
+                    <span class="row-label">名字</span>
+                    <input id="petNameInput" class="row-input" type="text" maxlength="24" />
+                  </label>
+                  <label class="row" for="personalityInput">
+                    <span class="row-label">性格</span>
+                    <textarea id="personalityInput" class="row-textarea" rows="3" maxlength="120"></textarea>
+                  </label>
+                  <label class="row" for="birthdayInput">
+                    <span class="row-label">生日</span>
+                    <input id="birthdayInput" class="row-input" type="date" />
+                  </label>
+                  <label class="row" for="notesInput">
+                    <span class="row-label">备注</span>
+                    <textarea id="notesInput" class="row-textarea" rows="3" maxlength="200"></textarea>
+                  </label>
+                </div>
+              </div>
+            </section>
+
+          <section class="panel" data-panel="library">
+              <div class="section">
+                <p class="section-title">陪伴形象</p>
+                <div class="section-rows">
+                  <label class="row" for="activePetSelect">
+                    <span class="row-label">当前形象</span>
+                    <select id="activePetSelect" class="row-select"></select>
+                  </label>
+                </div>
+              </div>
+              <div class="row-actions">
+                <button id="importPetButton" class="btn-primary" type="button">导入形象...</button>
+                <button id="openPetsFolderButton" class="btn-secondary" type="button">打开形象目录</button>
+              </div>
+            </section>
+
+          <section class="panel diy-panel" data-panel="diy">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Companion Studio</p>
+                <h2>制作对方的桌面陪伴</h2>
+                <p class="panel-lead">为一个真实的人选择关系称呼、绑定专属形象，或生成 gpt-image2 提示词后导入结果。</p>
+              </div>
+            </div>
+
+            <div class="diy-grid">
+              <article class="settings-card diy-person-card">
+                <div class="card-title-row">
+                  <h3>这个形象代表谁</h3>
+                  <span class="dev-badge">私有</span>
+                </div>
+                <label>
+                  <span>关系对象</span>
+                  <select id="diyFriendSelect"></select>
+                </label>
+                <label>
+                  <span>关系称呼</span>
+                  <input id="diyRelationshipLabelInput" type="text" maxlength="16" list="relationshipLabelOptions" placeholder="恋人 / 好友 / 搭子" />
+                </label>
+                <p class="field-note">绑定关系只保存在你的电脑上，不会把你的称呼同步给对方。</p>
+              </article>
+
+              <article class="settings-card diy-preview-card">
+                <div class="card-title-row">
+                  <h3>选择和预览形象</h3>
+                </div>
+                <div class="diy-preview-layout">
+                  <figure class="diy-preview-frame">
+                    <img id="diyBindingPreviewImage" src="../../assets/pets/pixel-girl-2/preview.png" alt="绑定预览" />
+                  </figure>
+                  <div class="diy-preview-controls">
+                    <label>
+                      <span>形象包</span>
+                      <select id="diyPetSelect"></select>
+                    </label>
+                    <div class="inline">
+                      <button id="diyApplyBindingButton" class="btn-primary" type="button">绑定形象</button>
+                      <button id="diyImportPetButton" class="btn-secondary" type="button">导入新形象...</button>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="settings-card diy-summary-card">
+                <div class="card-title-row">
+                  <h3>当前结果</h3>
+                  <span id="diyBindingStatus" class="status-badge" data-state="disconnected">未绑定</span>
+                </div>
+                <div class="binding-summary">
+                  <strong id="diyBindingTitle">请选择一个关系对象</strong>
+                  <span id="diyBindingMeta">选择关系对象和宠物包后，点击绑定并保存。</span>
+                </div>
+                <ol class="diy-steps">
+                  <li>先通过邀请码添加真实关系对象。</li>
+                  <li>选择一个能代表对方的形象。</li>
+                  <li>绑定后保存，来信和主页会使用它。</li>
+                </ol>
+              </article>
+
+              <article class="settings-card diy-generator-card">
+                <div class="card-title-row">
+                  <h3>gpt-image2 生成请求</h3>
+                  <span class="dev-badge">只用 gpt-image2</span>
+                </div>
+                <div class="generator-layout">
+                  <div class="generator-copy">
+                    <p>写下对方给你的感觉，生成提示词后到 gpt-image2 生图，再把结果导入并绑定。</p>
+                    <p class="field-note">这里不调用脚本生图，只负责把需求组织成可用提示词和导入入口。</p>
+                  </div>
+                  <div class="generator-controls">
+                    <label>
+                      <span>形象描述</span>
+                      <textarea id="diyImageBriefInput" rows="4" maxlength="260" placeholder="例如：温柔、干净、短发、浅色针织衫、适合常驻桌面的关系陪伴形象"></textarea>
+                    </label>
+                    <label>
+                      <span>视觉方向</span>
+                      <select id="diyImageStyleSelect">
+                        <option value="premium-pixel">精美像素关系陪伴</option>
+                        <option value="soft-avatar">温暖头像式关系形象</option>
+                        <option value="app-asset">商业级应用视觉资产</option>
+                      </select>
+                    </label>
+                    <div class="inline">
+                      <button id="diyPrepareImagePromptButton" class="btn-primary" type="button">生成提示词</button>
+                      <button id="diyPrepareActionPromptButton" class="btn-secondary" type="button">多动作提示词</button>
+                      <button id="diyCopyImagePromptButton" class="btn-secondary" type="button">复制</button>
+                      <button id="diyImportGeneratedImageButton" class="btn-secondary" type="button">导入结果...</button>
+                      <button id="diyImportGeneratedActionsButton" class="btn-secondary" type="button">导入动作文件夹...</button>
+                    </div>
+                  </div>
+                </div>
+                <label>
+                  <span>gpt-image2 提示词</span>
+                  <textarea id="diyImagePromptOutput" rows="7" readonly placeholder="点击“生成提示词”后，会在这里得到可直接用于 gpt-image2 的高质量提示词。"></textarea>
+                </label>
+                <p class="field-note">多动作结果请保存为 idle、wave、receive-message、jump、sleep 等文件名，再导入文件夹。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="interaction">
+              <div class="section">
+                <p class="section-title">互动表达</p>
+                <div class="section-rows">
+                  <label class="row" for="greetingInput">
+                    <span class="row-label">问候语</span>
+                    <input id="greetingInput" class="row-input" type="text" maxlength="80" />
+                  </label>
+                  <div class="row slider-row">
+                    <div class="row-text">
+                      <span class="row-label">情绪频率</span>
+                      <span class="row-desc">控制宠物自动表达情绪的频率</span>
+                    </div>
+                    <div class="slider-ctl">
+                      <input id="emotionFrequencyInput" class="range-slider" type="range" min="0" max="1" step="0.05" />
+                      <span id="emotionFrequencyText" class="range-val">普通</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row-actions">
+                <button id="testGreetingButton" class="btn-secondary" type="button">测试问候</button>
+              </div>
+            </section>
+
+          <section class="panel connect-panel" data-panel="connect">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Pet Connect</p>
+                <h2>朋友桌宠连接</h2>
+                <p class="panel-lead">用自己的桌宠添加朋友、查看状态，并通过真实服务器互相传短消息。</p>
+              </div>
+              <label class="switch hero-switch">
+                <input id="connectEnabledInput" type="checkbox" />
+                <span>
+                  <strong>开启连接</strong>
+                  <small>保持桌宠在线接收朋友来信</small>
+                </span>
+              </label>
+            </div>
+
+            <div class="connect-grid">
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>服务器连接</h3>
+                  <span id="connectStateBadge" class="status-badge" data-state="disconnected">未连接</span>
+                </div>
+                <label>
+                  <span>服务器地址</span>
+                  <input id="connectServerBaseUrlInput" type="text" maxlength="160" />
+                </label>
+                <div class="mini-grid">
+                  <label>
+                    <span>连接状态</span>
+                    <input id="connectConnectionStateInput" type="text" readonly />
+                  </label>
+                  <label>
+                    <span>我的用户 ID</span>
+                    <input id="connectUserIdInput" type="text" readonly />
+                  </label>
+                </div>
+                <div class="inline">
+                  <button id="connectRegisterButton" class="btn-primary" type="button">注册 / 连接</button>
+                  <button id="connectNowButton" class="btn-secondary" type="button">立即连接</button>
+                </div>
+              </article>
+
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>我的信息</h3>
+                </div>
+                <label>
+                  <span>连接昵称</span>
+                  <input id="connectDisplayNameInput" type="text" maxlength="32" />
+                </label>
+                <label>
+                  <span>桌宠状态</span>
+                  <select id="connectStatusSelect">
+                    <option value="online">在线</option>
+                    <option value="away">离开</option>
+                    <option value="focus">专注</option>
+                    <option value="dnd">勿扰</option>
+                  </select>
+                </label>
+                <label class="switch switch-card">
+                  <input id="connectAllowIncomingInput" type="checkbox" />
+                  <span>
+                    <strong>允许好友来信</strong>
+                    <small>只有已添加的朋友可以通过桌宠联系你</small>
+                  </span>
+                </label>
+              </article>
+
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>我的邀请码</h3>
+                </div>
+                <label>
+                  <span>分享给朋友</span>
+                  <div class="input-action">
+                    <input id="connectInviteCodeInput" type="text" readonly />
+                    <button id="connectCopyInviteButton" class="icon-action" type="button" title="复制邀请码">复制</button>
+                  </div>
+                </label>
+                <div class="inline">
+                  <button id="connectCreateInviteButton" class="btn-primary" type="button">生成邀请码</button>
+                </div>
+                <p class="field-note">邀请码短期有效，用来把朋友的桌宠加入你的好友列表。</p>
+              </article>
+
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>添加朋友桌宠</h3>
+                </div>
+                <label>
+                  <span>输入好友邀请码</span>
+                  <div class="input-action">
+                    <input id="connectAcceptInviteInput" type="text" maxlength="32" placeholder="例如 LENA-MOCHI-7X3K" />
+                    <button id="connectAcceptInviteButton" class="btn-primary" type="button">添加</button>
+                  </div>
+                </label>
+                <p class="field-note">添加成功后，你们可以看到彼此的桌宠状态并互相发送短消息。</p>
+              </article>
+
+              <article class="settings-card friends-card">
+                <div class="card-title-row">
+                  <h3>关系桌宠</h3>
+                </div>
+                <div id="connectFriendList" class="friend-list" role="list"></div>
+                <p class="field-note" id="connectRecentMessageText">暂无来信</p>
+              </article>
+
+              <article class="settings-card relationship-card">
+                <div class="card-title-row">
+                  <h3>关系设置</h3>
+                  <span class="dev-badge">本地私有</span>
+                </div>
+                <label>
+                  <span>关系称呼</span>
+                  <input id="connectRelationshipLabelInput" type="text" maxlength="16" list="relationshipLabelOptions" placeholder="恋人 / 好友 / 搭子" />
+                  <datalist id="relationshipLabelOptions">
+                    <option value="恋人"></option>
+                    <option value="男朋友"></option>
+                    <option value="女朋友"></option>
+                    <option value="好友"></option>
+                    <option value="搭子"></option>
+                    <option value="同事"></option>
+                    <option value="家人"></option>
+                  </datalist>
+                </label>
+                <label>
+                  <span>本地备注名</span>
+                  <input id="connectFriendAliasInput" type="text" maxlength="32" placeholder="只在你的电脑上显示" />
+                </label>
+                <label>
+                  <span>关系备注</span>
+                  <textarea id="connectFriendNoteInput" rows="3" maxlength="120" placeholder="例如：工作时陪我的桌宠，提醒我下班一起吃饭。"></textarea>
+                </label>
+                <label class="switch switch-card">
+                  <input id="connectFriendMuteInput" type="checkbox" />
+                  <span>
+                    <strong>静默这个关系桌宠</strong>
+                    <small>保留连接，但不让这个人弹出桌面气泡</small>
+                  </span>
+                </label>
+                <p class="field-note">关系称呼、备注和静默设置只保存在本地，不会同步给对方。</p>
+              </article>
+
+              <article class="settings-card message-card">
+                <div class="card-title-row">
+                  <h3>发送消息</h3>
+                </div>
+                <label>
+                  <span>选择关系桌宠</span>
+                  <select id="connectFriendSelect"></select>
+                </label>
+                <label>
+                  <span class="label-row">
+                    <span>短消息</span>
+                    <strong id="connectMessageCount">0/140</strong>
+                  </span>
+                  <textarea id="connectOutgoingMessageInput" rows="4" maxlength="140" placeholder="写一句会从你的桌宠发出的短消息"></textarea>
+                </label>
+                <div class="inline right">
+                  <button id="connectSendMessageButton" class="btn-primary send-action" type="button">发送</button>
+                </div>
+                <p class="field-note">好友在线时会实时收到气泡；离线时会在下次上线后送达。</p>
+              </article>
+
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>安静模式</h3>
+                </div>
+                <label class="switch switch-card">
+                  <input id="connectDoNotDisturbInput" type="checkbox" />
+                  <span>
+                    <strong>来信勿扰</strong>
+                    <small>保持在线，但不弹出桌面气泡</small>
+                  </span>
+                </label>
+                <p class="field-note">适合专注工作时使用，来信仍会记录在最近消息里。</p>
+              </article>
+
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>真实测试朋友</h3>
+                  <span class="dev-badge">本地测试</span>
+                </div>
+                <label>
+                  <span>测试朋友桌宠名</span>
+                  <input id="connectTestFriendPetNameInput" type="text" maxlength="32" />
+                </label>
+                <label>
+                  <span>测试朋友消息</span>
+                  <textarea id="connectTestFriendMessageInput" rows="3" maxlength="140"></textarea>
+                </label>
+                <div class="inline">
+                  <button id="connectCreateTestFriendButton" class="btn-primary" type="button">创建测试朋友</button>
+                  <button id="connectTestFriendMessageButton" class="btn-secondary" type="button">测试朋友发消息</button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel messages-panel" data-panel="messages">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Messages</p>
+                <h2>关系消息</h2>
+                <p class="panel-lead">短消息会通过真实连接抵达对方桌面，由对方的桌面陪伴显示出来。</p>
+              </div>
+            </div>
+            <div class="messages-grid">
+              <article class="settings-card messages-timeline-card">
+                <div class="card-title-row">
+                  <h3>最近来往</h3>
+                  <button id="messagesClearButton" class="btn-secondary" type="button">清空记录</button>
+                </div>
+                <div id="messagesList" class="message-list" role="list"></div>
+              </article>
+
+              <article class="settings-card messages-compose-card">
+                <div class="card-title-row">
+                  <h3>发一句轻量消息</h3>
+                </div>
+                <label>
+                  <span>发送给</span>
+                  <select id="messagesFriendSelect"></select>
+                </label>
+                <label>
+                  <span class="label-row">
+                    <span>短消息</span>
+                    <strong id="messagesQuickReplyCount">0/140</strong>
+                  </span>
+                  <textarea id="messagesQuickReplyInput" rows="5" maxlength="140" placeholder="写一句从你的桌宠发出的回复"></textarea>
+                </label>
+                <div id="messagesQuickMessages" class="quick-message-row" aria-label="消息快捷输入">
+                  <button type="button" data-message="我看到啦，晚点认真回你。">看到啦</button>
+                  <button type="button" data-message="今天也辛苦了，先抱抱自己。">辛苦啦</button>
+                  <button type="button" data-message="我在这边陪你，慢慢来。">我在</button>
+                  <button type="button" data-message="结束后告诉我一声，我们聊聊。">等你</button>
+                </div>
+                <div class="inline right">
+                  <button id="messagesSendButton" class="btn-primary send-action" type="button">发送</button>
+                </div>
+                <p class="field-note">发送后会走真实 Pet Connect 链路，对方在线时实时显示气泡。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel privacy-panel" data-panel="privacy">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Privacy</p>
+                <h2>隐私与边界</h2>
+                <p class="panel-lead">控制谁可以联系你、什么时候弹气泡，以及某个关系桌宠是否静默。</p>
+              </div>
+            </div>
+            <div class="privacy-grid">
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>全局接收</h3>
+                </div>
+                <label>
+                  <span>我的状态</span>
+                  <select id="privacyStatusSelect">
+                    <option value="online">在线</option>
+                    <option value="away">离开</option>
+                    <option value="focus">专注</option>
+                    <option value="dnd">勿扰</option>
+                  </select>
+                </label>
+                <label class="switch switch-card">
+                  <input id="privacyAllowIncomingInput" type="checkbox" />
+                  <span>
+                    <strong>允许关系桌宠来信</strong>
+                    <small>关闭后仍保留连接，但不会接收好友桌面来信提醒</small>
+                  </span>
+                </label>
+                <label class="switch switch-card">
+                  <input id="privacyDoNotDisturbInput" type="checkbox" />
+                  <span>
+                    <strong>全局勿扰</strong>
+                    <small>保持在线并记录消息，但不弹桌面气泡</small>
+                  </span>
+                </label>
+              </article>
+
+              <article class="settings-card">
+                <div class="card-title-row">
+                  <h3>单个关系静默</h3>
+                </div>
+                <label>
+                  <span>关系桌宠</span>
+                  <select id="privacyFriendSelect"></select>
+                </label>
+                <label class="switch switch-card">
+                  <input id="privacyFriendMuteInput" type="checkbox" />
+                  <span>
+                    <strong>静默这个人</strong>
+                    <small>这个人的来信会进入记录，但不弹出桌面气泡</small>
+                  </span>
+                </label>
+                <div class="inline">
+                  <button id="privacyApplyButton" class="btn-primary" type="button">保存隐私设置</button>
+                  <button id="privacyClearMessagesButton" class="btn-secondary" type="button">清空本地消息</button>
+                </div>
+                <p class="field-note">删除好友、拉黑和隐藏在线状态会在下一轮继续补齐。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="weather">
+              <div class="section">
+                <p class="section-title">天气播报</p>
+                <div class="section-rows">
+                  <label class="row" for="weatherCityInput">
+                    <span class="row-label">城市</span>
+                    <input id="weatherCityInput" class="row-input" type="text" maxlength="48" />
+                  </label>
+                </div>
+              </div>
+              <div class="chips" id="cityChips">
+                <button type="button" data-city="Shanghai">Shanghai</button>
+                <button type="button" data-city="Beijing">Beijing</button>
+                <button type="button" data-city="Hangzhou">Hangzhou</button>
+                <button type="button" data-city="Shenzhen">Shenzhen</button>
+                <button type="button" data-city="Guangzhou">Guangzhou</button>
+                <button type="button" data-city="Chengdu">Chengdu</button>
+              </div>
+              <div class="row-actions">
+                <button id="testWeatherButton" class="btn-secondary" type="button">测试天气播报</button>
+              </div>
+            </section>
+
+          <section class="panel behavior-panel" data-panel="behavior">
+              <div class="section">
+                <p class="section-title">行为开关</p>
+                <div class="section-rows">
+                  <label class="row switch-row" for="behaviorEnabledInput">
+                    <div class="row-text"><span class="row-label">自动动作</span><span class="row-desc">宠物自动执行随机动作</span></div>
+                    <span class="ios-switch"><input id="behaviorEnabledInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="showNameInput">
+                    <div class="row-text"><span class="row-label">显示名字</span><span class="row-desc">在宠物下方显示名称标签</span></div>
+                    <span class="ios-switch"><input id="showNameInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="topmostInput">
+                    <div class="row-text"><span class="row-label">窗口置顶</span><span class="row-desc">始终显示在其他窗口之上</span></div>
+                    <span class="ios-switch"><input id="topmostInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="inputReactionsInput">
+                    <div class="row-text"><span class="row-label">点击反应</span><span class="row-desc">点击宠物时触发动画反应</span></div>
+                    <span class="ios-switch"><input id="inputReactionsInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="hideOnHoverInput">
+                    <div class="row-text"><span class="row-label">悬停隐藏</span><span class="row-desc">鼠标悬停时宠物渐渐消失</span></div>
+                    <span class="ios-switch"><input id="hideOnHoverInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="passThroughInput">
+                    <div class="row-text"><span class="row-label">点击穿透</span><span class="row-desc">鼠标事件穿过宠物窗口</span></div>
+                    <span class="ios-switch"><input id="passThroughInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="keepInScreenInput">
+                    <div class="row-text"><span class="row-label">限制在屏幕内</span><span class="row-desc">防止宠物漫游到屏幕外</span></div>
+                    <span class="ios-switch"><input id="keepInScreenInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                  <label class="row switch-row" for="taskbarVisibleInput">
+                    <div class="row-text"><span class="row-label">任务栏显示</span><span class="row-desc">在系统任务栏中显示应用</span></div>
+                    <span class="ios-switch"><input id="taskbarVisibleInput" type="checkbox" /><span class="ios-track"></span></span>
+                  </label>
+                </div>
+              </div>
+              <div class="section">
+                <p class="section-title">外观</p>
+                <div class="section-rows">
+                  <div class="row slider-row">
+                    <div class="row-text">
+                      <span class="row-label">尺寸</span>
+                      <span class="row-desc">调整宠物在屏幕上的大小</span>
+                    </div>
+                    <div class="slider-ctl">
+                      <input id="scaleInput" class="range-slider" type="range" min="0.75" max="3" step="0.25" />
+                      <span id="scaleText" class="range-val">1x</span>
+                    </div>
+                  </div>
+                  <div class="row slider-row">
+                    <div class="row-text">
+                      <span class="row-label">透明度</span>
+                      <span class="row-desc">调整宠物窗口的透明程度</span>
+                    </div>
+                    <div class="slider-ctl">
+                      <input id="opacityInput" class="range-slider" type="range" min="0.35" max="1" step="0.05" />
+                      <span id="opacityText" class="range-val">100%</span>
+                    </div>
+                  </div>
+                  <div class="row slider-row">
+                    <div class="row-text">
+                      <span class="row-label">悬停隐藏延迟</span>
+                      <span class="row-desc">鼠标悬停多久后宠物消失</span>
+                    </div>
+                    <div class="slider-ctl">
+                      <input id="hideOnHoverDelayInput" class="range-slider" type="range" min="0" max="5" step="0.25" />
+                      <span id="hideOnHoverDelayText" class="range-val">0.25s</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+        <footer class="app-footer"><span id="statusText">修改后点击保存</span></footer>
+      </div>
+    </div>
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+    <script src="./preferences.js"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' file:; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; script-src 'self';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desktop Pet</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="stage" aria-label="Desktop pet">
+      <div id="topLayer">
+        <div id="speechBubble" aria-live="polite">
+          <span id="speechText"></span>
+        </div>
+        <section id="quickPanel" aria-label="Quick actions">
+          <div id="actionGrid"></div>
+          <div id="toolRail">
+            <button type="button" data-command="greeting" title="问候">👋</button>
+            <button type="button" data-command="mood" data-mood="happy" title="开心">✨</button>
+            <button type="button" data-command="mood" data-mood="focus" title="专注">🎯</button>
+            <button type="button" data-command="weather" title="天气">🌤</button>
+            <button type="button" data-command="preferences" title="设置">⚙️</button>
+          </div>
+        </section>
+      </div>
+      <div id="pet" role="img" aria-label="Pixel Girl desktop pet"></div>
+      <div id="nameTag" aria-hidden="true">
+        <span id="nameText"></span>
+        <span id="statusDot" class="status-dot hidden"></span>
+      </div>
+    </main>
+    <script src="./pet.js"></script>
+  </body>
+</html>

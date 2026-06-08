@@ -1,0 +1,1173 @@
+{
+  "sourceDir": "F:\\work\\AI\\desktop-pet-windows\\人物素材\\人物素材版本2",
+  "outputDir": "F:\\work\\AI\\desktop-pet-windows\\人物素材\\人物素材版本2_抠图",
+  "background": "green screen removed to alpha",
+  "actions": {
+    "stand": {
+      "source": "站.png",
+      "transparentStrip": "transparent_strips/站.png",
+      "frameCount": 9,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/stand/stand_00.png",
+          "sourceBox": [
+            62,
+            138,
+            221,
+            636
+          ],
+          "size": [
+            159,
+            498
+          ],
+          "visiblePixels": 56183
+        },
+        {
+          "index": 1,
+          "file": "frames/stand/stand_01.png",
+          "sourceBox": [
+            291,
+            138,
+            451,
+            636
+          ],
+          "size": [
+            160,
+            498
+          ],
+          "visiblePixels": 56192
+        },
+        {
+          "index": 2,
+          "file": "frames/stand/stand_02.png",
+          "sourceBox": [
+            522,
+            138,
+            683,
+            636
+          ],
+          "size": [
+            161,
+            498
+          ],
+          "visiblePixels": 56386
+        },
+        {
+          "index": 3,
+          "file": "frames/stand/stand_03.png",
+          "sourceBox": [
+            751,
+            138,
+            912,
+            636
+          ],
+          "size": [
+            161,
+            498
+          ],
+          "visiblePixels": 56207
+        },
+        {
+          "index": 4,
+          "file": "frames/stand/stand_04.png",
+          "sourceBox": [
+            983,
+            138,
+            1143,
+            635
+          ],
+          "size": [
+            160,
+            497
+          ],
+          "visiblePixels": 56091
+        },
+        {
+          "index": 5,
+          "file": "frames/stand/stand_05.png",
+          "sourceBox": [
+            1215,
+            138,
+            1377,
+            636
+          ],
+          "size": [
+            162,
+            498
+          ],
+          "visiblePixels": 56496
+        },
+        {
+          "index": 6,
+          "file": "frames/stand/stand_06.png",
+          "sourceBox": [
+            1450,
+            138,
+            1611,
+            636
+          ],
+          "size": [
+            161,
+            498
+          ],
+          "visiblePixels": 56550
+        },
+        {
+          "index": 7,
+          "file": "frames/stand/stand_07.png",
+          "sourceBox": [
+            1683,
+            138,
+            1845,
+            636
+          ],
+          "size": [
+            162,
+            498
+          ],
+          "visiblePixels": 56674
+        },
+        {
+          "index": 8,
+          "file": "frames/stand/stand_08.png",
+          "sourceBox": [
+            1921,
+            138,
+            2082,
+            636
+          ],
+          "size": [
+            161,
+            498
+          ],
+          "visiblePixels": 56611
+        }
+      ]
+    },
+    "walk-right": {
+      "source": "右走.png",
+      "transparentStrip": "transparent_strips/右走.png",
+      "frameCount": 9,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/walk-right/walk-right_00.png",
+          "sourceBox": [
+            63,
+            113,
+            260,
+            613
+          ],
+          "size": [
+            197,
+            500
+          ],
+          "visiblePixels": 61499
+        },
+        {
+          "index": 1,
+          "file": "frames/walk-right/walk-right_01.png",
+          "sourceBox": [
+            303,
+            114,
+            492,
+            614
+          ],
+          "size": [
+            189,
+            500
+          ],
+          "visiblePixels": 58562
+        },
+        {
+          "index": 2,
+          "file": "frames/walk-right/walk-right_02.png",
+          "sourceBox": [
+            548,
+            114,
+            748,
+            613
+          ],
+          "size": [
+            200,
+            499
+          ],
+          "visiblePixels": 61227
+        },
+        {
+          "index": 3,
+          "file": "frames/walk-right/walk-right_03.png",
+          "sourceBox": [
+            779,
+            114,
+            990,
+            613
+          ],
+          "size": [
+            211,
+            499
+          ],
+          "visiblePixels": 60426
+        },
+        {
+          "index": 4,
+          "file": "frames/walk-right/walk-right_04.png",
+          "sourceBox": [
+            1014,
+            114,
+            1223,
+            614
+          ],
+          "size": [
+            209,
+            500
+          ],
+          "visiblePixels": 62006
+        },
+        {
+          "index": 5,
+          "file": "frames/walk-right/walk-right_05.png",
+          "sourceBox": [
+            1249,
+            114,
+            1471,
+            614
+          ],
+          "size": [
+            222,
+            500
+          ],
+          "visiblePixels": 63074
+        },
+        {
+          "index": 6,
+          "file": "frames/walk-right/walk-right_06.png",
+          "sourceBox": [
+            1480,
+            114,
+            1699,
+            613
+          ],
+          "size": [
+            219,
+            499
+          ],
+          "visiblePixels": 59057
+        },
+        {
+          "index": 7,
+          "file": "frames/walk-right/walk-right_07.png",
+          "sourceBox": [
+            1713,
+            114,
+            1919,
+            613
+          ],
+          "size": [
+            206,
+            499
+          ],
+          "visiblePixels": 61680
+        },
+        {
+          "index": 8,
+          "file": "frames/walk-right/walk-right_08.png",
+          "sourceBox": [
+            1924,
+            113,
+            2140,
+            613
+          ],
+          "size": [
+            216,
+            500
+          ],
+          "visiblePixels": 59120
+        }
+      ]
+    },
+    "walk-left": {
+      "source": "左走.png",
+      "transparentStrip": "transparent_strips/左走.png",
+      "frameCount": 9,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/walk-left/walk-left_00.png",
+          "sourceBox": [
+            39,
+            145,
+            223,
+            563
+          ],
+          "size": [
+            184,
+            418
+          ],
+          "visiblePixels": 45087
+        },
+        {
+          "index": 1,
+          "file": "frames/walk-left/walk-left_01.png",
+          "sourceBox": [
+            296,
+            145,
+            479,
+            563
+          ],
+          "size": [
+            183,
+            418
+          ],
+          "visiblePixels": 45795
+        },
+        {
+          "index": 2,
+          "file": "frames/walk-left/walk-left_02.png",
+          "sourceBox": [
+            558,
+            147,
+            728,
+            563
+          ],
+          "size": [
+            170,
+            416
+          ],
+          "visiblePixels": 44369
+        },
+        {
+          "index": 3,
+          "file": "frames/walk-left/walk-left_03.png",
+          "sourceBox": [
+            811,
+            145,
+            974,
+            563
+          ],
+          "size": [
+            163,
+            418
+          ],
+          "visiblePixels": 43137
+        },
+        {
+          "index": 4,
+          "file": "frames/walk-left/walk-left_04.png",
+          "sourceBox": [
+            1066,
+            149,
+            1219,
+            563
+          ],
+          "size": [
+            153,
+            414
+          ],
+          "visiblePixels": 42371
+        },
+        {
+          "index": 5,
+          "file": "frames/walk-left/walk-left_05.png",
+          "sourceBox": [
+            1275,
+            153,
+            1471,
+            563
+          ],
+          "size": [
+            196,
+            410
+          ],
+          "visiblePixels": 45530
+        },
+        {
+          "index": 6,
+          "file": "frames/walk-left/walk-left_06.png",
+          "sourceBox": [
+            1543,
+            153,
+            1696,
+            563
+          ],
+          "size": [
+            153,
+            410
+          ],
+          "visiblePixels": 41589
+        },
+        {
+          "index": 7,
+          "file": "frames/walk-left/walk-left_07.png",
+          "sourceBox": [
+            1760,
+            147,
+            1917,
+            563
+          ],
+          "size": [
+            157,
+            416
+          ],
+          "visiblePixels": 42074
+        },
+        {
+          "index": 8,
+          "file": "frames/walk-left/walk-left_08.png",
+          "sourceBox": [
+            1940,
+            156,
+            2159,
+            563
+          ],
+          "size": [
+            219,
+            407
+          ],
+          "visiblePixels": 41458
+        }
+      ]
+    },
+    "wave": {
+      "source": "招手.png",
+      "transparentStrip": "transparent_strips/招手.png",
+      "frameCount": 9,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/wave/wave_00.png",
+          "sourceBox": [
+            61,
+            148,
+            217,
+            634
+          ],
+          "size": [
+            156,
+            486
+          ],
+          "visiblePixels": 55773
+        },
+        {
+          "index": 1,
+          "file": "frames/wave/wave_01.png",
+          "sourceBox": [
+            268,
+            147,
+            468,
+            634
+          ],
+          "size": [
+            200,
+            487
+          ],
+          "visiblePixels": 60164
+        },
+        {
+          "index": 2,
+          "file": "frames/wave/wave_02.png",
+          "sourceBox": [
+            513,
+            144,
+            709,
+            634
+          ],
+          "size": [
+            196,
+            490
+          ],
+          "visiblePixels": 60927
+        },
+        {
+          "index": 3,
+          "file": "frames/wave/wave_03.png",
+          "sourceBox": [
+            761,
+            145,
+            954,
+            634
+          ],
+          "size": [
+            193,
+            489
+          ],
+          "visiblePixels": 60551
+        },
+        {
+          "index": 4,
+          "file": "frames/wave/wave_04.png",
+          "sourceBox": [
+            1001,
+            138,
+            1198,
+            634
+          ],
+          "size": [
+            197,
+            496
+          ],
+          "visiblePixels": 60670
+        },
+        {
+          "index": 5,
+          "file": "frames/wave/wave_05.png",
+          "sourceBox": [
+            1228,
+            148,
+            1439,
+            634
+          ],
+          "size": [
+            211,
+            486
+          ],
+          "visiblePixels": 59171
+        },
+        {
+          "index": 6,
+          "file": "frames/wave/wave_06.png",
+          "sourceBox": [
+            1501,
+            152,
+            1656,
+            632
+          ],
+          "size": [
+            155,
+            480
+          ],
+          "visiblePixels": 53648
+        },
+        {
+          "index": 7,
+          "file": "frames/wave/wave_07.png",
+          "sourceBox": [
+            1695,
+            152,
+            1886,
+            632
+          ],
+          "size": [
+            191,
+            480
+          ],
+          "visiblePixels": 56176
+        },
+        {
+          "index": 8,
+          "file": "frames/wave/wave_08.png",
+          "sourceBox": [
+            1966,
+            148,
+            2121,
+            633
+          ],
+          "size": [
+            155,
+            485
+          ],
+          "visiblePixels": 54809
+        }
+      ]
+    },
+    "jump": {
+      "source": "跳.png",
+      "transparentStrip": "transparent_strips/跳.png",
+      "frameCount": 9,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/jump/jump_00.png",
+          "sourceBox": [
+            48,
+            316,
+            212,
+            579
+          ],
+          "size": [
+            164,
+            263
+          ],
+          "visiblePixels": 27239
+        },
+        {
+          "index": 1,
+          "file": "frames/jump/jump_01.png",
+          "sourceBox": [
+            305,
+            310,
+            478,
+            579
+          ],
+          "size": [
+            173,
+            269
+          ],
+          "visiblePixels": 29980
+        },
+        {
+          "index": 2,
+          "file": "frames/jump/jump_02.png",
+          "sourceBox": [
+            551,
+            197,
+            728,
+            528
+          ],
+          "size": [
+            177,
+            331
+          ],
+          "visiblePixels": 32538
+        },
+        {
+          "index": 3,
+          "file": "frames/jump/jump_03.png",
+          "sourceBox": [
+            788,
+            133,
+            973,
+            480
+          ],
+          "size": [
+            185,
+            347
+          ],
+          "visiblePixels": 33141
+        },
+        {
+          "index": 4,
+          "file": "frames/jump/jump_04.png",
+          "sourceBox": [
+            1036,
+            111,
+            1229,
+            393
+          ],
+          "size": [
+            193,
+            282
+          ],
+          "visiblePixels": 34642
+        },
+        {
+          "index": 5,
+          "file": "frames/jump/jump_05.png",
+          "sourceBox": [
+            1264,
+            173,
+            1489,
+            518
+          ],
+          "size": [
+            225,
+            345
+          ],
+          "visiblePixels": 36853
+        },
+        {
+          "index": 6,
+          "file": "frames/jump/jump_06.png",
+          "sourceBox": [
+            1517,
+            280,
+            1735,
+            579
+          ],
+          "size": [
+            218,
+            299
+          ],
+          "visiblePixels": 32824
+        },
+        {
+          "index": 7,
+          "file": "frames/jump/jump_07.png",
+          "sourceBox": [
+            1777,
+            243,
+            1922,
+            579
+          ],
+          "size": [
+            145,
+            336
+          ],
+          "visiblePixels": 32452
+        },
+        {
+          "index": 8,
+          "file": "frames/jump/jump_08.png",
+          "sourceBox": [
+            1993,
+            240,
+            2112,
+            579
+          ],
+          "size": [
+            119,
+            339
+          ],
+          "visiblePixels": 29841
+        }
+      ]
+    },
+    "slide": {
+      "source": "滑.png",
+      "transparentStrip": "transparent_strips/滑.png",
+      "frameCount": 9,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/slide/slide_00.png",
+          "sourceBox": [
+            42,
+            182,
+            207,
+            551
+          ],
+          "size": [
+            165,
+            369
+          ],
+          "visiblePixels": 36962
+        },
+        {
+          "index": 1,
+          "file": "frames/slide/slide_01.png",
+          "sourceBox": [
+            242,
+            191,
+            444,
+            551
+          ],
+          "size": [
+            202,
+            360
+          ],
+          "visiblePixels": 37290
+        },
+        {
+          "index": 2,
+          "file": "frames/slide/slide_02.png",
+          "sourceBox": [
+            468,
+            203,
+            683,
+            551
+          ],
+          "size": [
+            215,
+            348
+          ],
+          "visiblePixels": 35950
+        },
+        {
+          "index": 3,
+          "file": "frames/slide/slide_03.png",
+          "sourceBox": [
+            708,
+            213,
+            920,
+            552
+          ],
+          "size": [
+            212,
+            339
+          ],
+          "visiblePixels": 33119
+        },
+        {
+          "index": 4,
+          "file": "frames/slide/slide_04.png",
+          "sourceBox": [
+            918,
+            219,
+            1147,
+            552
+          ],
+          "size": [
+            229,
+            333
+          ],
+          "visiblePixels": 36676
+        },
+        {
+          "index": 5,
+          "file": "frames/slide/slide_05.png",
+          "sourceBox": [
+            1135,
+            221,
+            1376,
+            552
+          ],
+          "size": [
+            241,
+            331
+          ],
+          "visiblePixels": 36702
+        },
+        {
+          "index": 6,
+          "file": "frames/slide/slide_06.png",
+          "sourceBox": [
+            1388,
+            227,
+            1605,
+            552
+          ],
+          "size": [
+            217,
+            325
+          ],
+          "visiblePixels": 33710
+        },
+        {
+          "index": 7,
+          "file": "frames/slide/slide_07.png",
+          "sourceBox": [
+            1611,
+            243,
+            1872,
+            552
+          ],
+          "size": [
+            261,
+            309
+          ],
+          "visiblePixels": 34614
+        },
+        {
+          "index": 8,
+          "file": "frames/slide/slide_08.png",
+          "sourceBox": [
+            1844,
+            263,
+            2159,
+            552
+          ],
+          "size": [
+            315,
+            289
+          ],
+          "visiblePixels": 34338
+        }
+      ]
+    },
+    "sleep": {
+      "source": "睡觉.png",
+      "transparentStrip": "transparent_strips/睡觉.png",
+      "frameCount": 12,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/sleep/sleep_00.png",
+          "sourceBox": [
+            29,
+            131,
+            192,
+            609
+          ],
+          "size": [
+            163,
+            478
+          ],
+          "visiblePixels": 74172
+        },
+        {
+          "index": 1,
+          "file": "frames/sleep/sleep_01.png",
+          "sourceBox": [
+            209,
+            131,
+            372,
+            609
+          ],
+          "size": [
+            163,
+            478
+          ],
+          "visiblePixels": 74136
+        },
+        {
+          "index": 2,
+          "file": "frames/sleep/sleep_02.png",
+          "sourceBox": [
+            388,
+            131,
+            551,
+            609
+          ],
+          "size": [
+            163,
+            478
+          ],
+          "visiblePixels": 74012
+        },
+        {
+          "index": 3,
+          "file": "frames/sleep/sleep_03.png",
+          "sourceBox": [
+            565,
+            131,
+            728,
+            609
+          ],
+          "size": [
+            163,
+            478
+          ],
+          "visiblePixels": 74479
+        },
+        {
+          "index": 4,
+          "file": "frames/sleep/sleep_04.png",
+          "sourceBox": [
+            743,
+            131,
+            907,
+            609
+          ],
+          "size": [
+            164,
+            478
+          ],
+          "visiblePixels": 74244
+        },
+        {
+          "index": 5,
+          "file": "frames/sleep/sleep_05.png",
+          "sourceBox": [
+            920,
+            131,
+            1084,
+            609
+          ],
+          "size": [
+            164,
+            478
+          ],
+          "visiblePixels": 74361
+        },
+        {
+          "index": 6,
+          "file": "frames/sleep/sleep_06.png",
+          "sourceBox": [
+            1097,
+            131,
+            1261,
+            609
+          ],
+          "size": [
+            164,
+            478
+          ],
+          "visiblePixels": 74313
+        },
+        {
+          "index": 7,
+          "file": "frames/sleep/sleep_07.png",
+          "sourceBox": [
+            1277,
+            132,
+            1436,
+            609
+          ],
+          "size": [
+            159,
+            477
+          ],
+          "visiblePixels": 73257
+        },
+        {
+          "index": 8,
+          "file": "frames/sleep/sleep_08.png",
+          "sourceBox": [
+            1451,
+            131,
+            1612,
+            609
+          ],
+          "size": [
+            161,
+            478
+          ],
+          "visiblePixels": 73976
+        },
+        {
+          "index": 9,
+          "file": "frames/sleep/sleep_09.png",
+          "sourceBox": [
+            1630,
+            131,
+            1791,
+            609
+          ],
+          "size": [
+            161,
+            478
+          ],
+          "visiblePixels": 73949
+        },
+        {
+          "index": 10,
+          "file": "frames/sleep/sleep_10.png",
+          "sourceBox": [
+            1806,
+            131,
+            1969,
+            609
+          ],
+          "size": [
+            163,
+            478
+          ],
+          "visiblePixels": 74371
+        },
+        {
+          "index": 11,
+          "file": "frames/sleep/sleep_11.png",
+          "sourceBox": [
+            1981,
+            131,
+            2143,
+            610
+          ],
+          "size": [
+            162,
+            479
+          ],
+          "visiblePixels": 73962
+        }
+      ]
+    },
+    "run": {
+      "source": "跑.png",
+      "transparentStrip": "transparent_strips/跑.png",
+      "frameCount": 8,
+      "frames": [
+        {
+          "index": 0,
+          "file": "frames/run/run_00.png",
+          "sourceBox": [
+            45,
+            135,
+            245,
+            613
+          ],
+          "size": [
+            200,
+            478
+          ],
+          "visiblePixels": 54478
+        },
+        {
+          "index": 1,
+          "file": "frames/run/run_01.png",
+          "sourceBox": [
+            288,
+            137,
+            492,
+            612
+          ],
+          "size": [
+            204,
+            475
+          ],
+          "visiblePixels": 53287
+        },
+        {
+          "index": 2,
+          "file": "frames/run/run_02.png",
+          "sourceBox": [
+            544,
+            135,
+            740,
+            613
+          ],
+          "size": [
+            196,
+            478
+          ],
+          "visiblePixels": 54084
+        },
+        {
+          "index": 3,
+          "file": "frames/run/run_03.png",
+          "sourceBox": [
+            791,
+            135,
+            984,
+            613
+          ],
+          "size": [
+            193,
+            478
+          ],
+          "visiblePixels": 53661
+        },
+        {
+          "index": 4,
+          "file": "frames/run/run_04.png",
+          "sourceBox": [
+            1041,
+            137,
+            1234,
+            611
+          ],
+          "size": [
+            193,
+            474
+          ],
+          "visiblePixels": 55816
+        },
+        {
+          "index": 5,
+          "file": "frames/run/run_05.png",
+          "sourceBox": [
+            1293,
+            135,
+            1487,
+            613
+          ],
+          "size": [
+            194,
+            478
+          ],
+          "visiblePixels": 54060
+        },
+        {
+          "index": 6,
+          "file": "frames/run/run_06.png",
+          "sourceBox": [
+            1547,
+            135,
+            1740,
+            613
+          ],
+          "size": [
+            193,
+            478
+          ],
+          "visiblePixels": 53279
+        },
+        {
+          "index": 7,
+          "file": "frames/run/run_07.png",
+          "sourceBox": [
+            1797,
+            135,
+            2000,
+            613
+          ],
+          "size": [
+            203,
+            478
+          ],
+          "visiblePixels": 54743
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "desktop-pet-windows",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A relationship-centered Windows desktop companion app with invite-based real-time connection.",
+  "license": "MIT",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "start:pet-connect": "node server/pet-connect-server.js",
+    "lint": "node --check src/main.js && node --check src/preload.js && node --check src/renderer/pet.js && node --check src/dialog/name.js && node --check src/preferences/preferences.js && node --check src/import-preview/preview.js && node --check server/pet-connect-server.js"
+  },
+  "devDependencies": {
+    "electron": "^39.8.10"
+  },
+  "dependencies": {
+    "ws": "^8.20.0"
+  }
+}

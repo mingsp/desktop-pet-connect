@@ -1,0 +1,187 @@
+{
+  "id": "pixel-girl-2",
+  "displayName": "Pixel Girl 2",
+  "description": "A polished second pixel-art desktop pet built from version 2 action frames.",
+  "spritesheet": "spritesheet.png",
+  "spritesheetPath": "spritesheet.png",
+  "grid": {
+    "columns": 12,
+    "rows": 8
+  },
+  "cell": {
+    "width": 192,
+    "height": 208
+  },
+  "source": {
+    "cutoutManifest": "F:\\work\\AI\\desktop-pet-windows\\人物素材\\人物素材版本2_抠图\\cutout_manifest.json",
+    "sourceSet": "人物素材版本2"
+  },
+  "actions": [
+    {
+      "label": "站立",
+      "state": "idle"
+    },
+    {
+      "label": "向右走",
+      "state": "running-right"
+    },
+    {
+      "label": "向左走",
+      "state": "running-left"
+    },
+    {
+      "label": "打招呼",
+      "state": "waving"
+    },
+    {
+      "label": "跳跃",
+      "state": "jumping"
+    },
+    {
+      "label": "滑行",
+      "state": "dragged"
+    },
+    {
+      "label": "睡觉",
+      "state": "sleepy"
+    },
+    {
+      "label": "跑步",
+      "state": "running"
+    }
+  ],
+  "states": {
+    "idle": {
+      "row": 0,
+      "frames": 9,
+      "durations": [
+        260,
+        260,
+        260,
+        260,
+        260,
+        260,
+        260,
+        260,
+        260
+      ],
+      "loop": true
+    },
+    "running-right": {
+      "row": 1,
+      "frames": 9,
+      "durations": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120
+      ],
+      "loop": true,
+      "walk": 54
+    },
+    "running-left": {
+      "row": 2,
+      "frames": 9,
+      "durations": [
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120,
+        120
+      ],
+      "loop": true,
+      "walk": -54
+    },
+    "waving": {
+      "row": 3,
+      "frames": 9,
+      "durations": [
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        140,
+        300
+      ],
+      "loop": false
+    },
+    "jumping": {
+      "row": 4,
+      "frames": 9,
+      "durations": [
+        135,
+        135,
+        135,
+        135,
+        135,
+        135,
+        135,
+        135,
+        280
+      ],
+      "loop": false
+    },
+    "dragged": {
+      "row": 5,
+      "frames": 9,
+      "durations": [
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130,
+        130
+      ],
+      "loop": true
+    },
+    "sleepy": {
+      "row": 6,
+      "frames": 12,
+      "durations": [
+        280,
+        280,
+        280,
+        280,
+        280,
+        280,
+        280,
+        280,
+        280,
+        280,
+        280,
+        280
+      ],
+      "loop": true
+    },
+    "running": {
+      "row": 7,
+      "frames": 8,
+      "durations": [
+        115,
+        115,
+        115,
+        115,
+        115,
+        115,
+        115,
+        115
+      ],
+      "loop": true
+    }
+  }
+}

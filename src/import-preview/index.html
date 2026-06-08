@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' file:; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; script-src 'self';"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>导入桌宠角色</title>
+    <link rel="stylesheet" href="./preview.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="titlebar">
+        <div>
+          <p id="eyebrow">角色包预览</p>
+          <h1 id="displayName">正在读取</h1>
+        </div>
+        <span id="statusBadge">校验中</span>
+      </header>
+
+      <section class="content">
+        <figure class="preview">
+          <img id="previewImage" alt="桌宠角色预览" />
+          <figcaption id="previewCaption">预览图</figcaption>
+        </figure>
+
+        <section class="details">
+          <dl>
+            <div>
+              <dt>来源目录</dt>
+              <dd id="sourceDir"></dd>
+            </div>
+            <div>
+              <dt>包 ID</dt>
+              <dd id="packageId"></dd>
+            </div>
+            <div>
+              <dt>精灵图</dt>
+              <dd id="spritesheetName"></dd>
+            </div>
+            <div>
+              <dt>图集规格</dt>
+              <dd id="gridText"></dd>
+            </div>
+            <div>
+              <dt>单帧尺寸</dt>
+              <dd id="cellText"></dd>
+            </div>
+            <div>
+              <dt>动作状态</dt>
+              <dd id="stateText"></dd>
+            </div>
+          </dl>
+
+          <section class="issues">
+            <h2>校验结果</h2>
+            <ul id="issueList"></ul>
+          </section>
+        </section>
+      </section>
+
+      <footer>
+        <button id="cancelButton" type="button">取消</button>
+        <button id="confirmButton" type="button">导入并切换</button>
+      </footer>
+    </main>
+    <script src="./preview.js"></script>
+  </body>
+</html>
