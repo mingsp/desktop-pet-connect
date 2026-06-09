@@ -10,182 +10,262 @@
     <title>桌面陪伴</title>
     <link rel="stylesheet" href="./preferences.css" />
   </head>
-  <body>
+  <body data-active-panel="home">
     <div class="app">
       <nav class="sidebar">
         <div class="sidebar-header">
-          <span class="sidebar-logo">✦</span>
+          <img class="sidebar-logo-img" src="./assets/friend-hub/brand-mark.svg" alt="" />
           <div>
-            <strong class="sidebar-title">Desktop Pet</strong>
-            <span class="sidebar-sub">Connect</span>
+            <strong class="sidebar-title">Desktop</strong>
+            <span class="sidebar-sub">Pet Connect</span>
           </div>
         </div>
         <div class="sidebar-nav">
-          <button class="sidebar-item active" type="button" data-tab="home">
-            <span class="sidebar-item-icon">♥</span>
-            <span class="sidebar-item-label">关系主页</span>
+          <button class="sidebar-item active" type="button" data-tab="home" title="Friends">
+            <img class="sidebar-item-icon" src="./assets/friend-hub/icon-friends.svg" alt="" />
+            <span class="sidebar-item-label">Friends</span>
           </button>
-          <button class="sidebar-item" type="button" data-tab="diy">
-            <span class="sidebar-item-icon">✦</span>
-            <span class="sidebar-item-label">制作形象</span>
+          <button class="sidebar-item" type="button" data-tab="diy" title="Create Companion">
+            <img class="sidebar-item-icon" src="./assets/friend-hub/icon-create.svg" alt="" />
+            <span class="sidebar-item-label">Create Companion</span>
           </button>
-          <button class="sidebar-item" type="button" data-tab="messages">
-            <span class="sidebar-item-icon">✉</span>
-            <span class="sidebar-item-label">消息</span>
+          <button class="sidebar-item" type="button" data-tab="messages" title="Messages">
+            <img class="sidebar-item-icon" src="./assets/friend-hub/icon-messages.svg" alt="" />
+            <span class="sidebar-item-label">Messages</span>
           </button>
-          <div class="sidebar-sep"></div>
-          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="connect" data-advanced="true">
-            <span class="sidebar-item-icon">⇌</span>
-            <span class="sidebar-item-label">连接细节</span>
+          <button class="sidebar-item" type="button" data-tab="connect" title="Invites">
+            <img class="sidebar-item-icon" src="./assets/friend-hub/icon-invites.svg" alt="" />
+            <span class="sidebar-item-label">Invites</span>
           </button>
-          <button class="sidebar-item sidebar-item-adv" type="button" data-tab="privacy" data-advanced="true">
-            <span class="sidebar-item-icon">⊡</span>
-            <span class="sidebar-item-label">隐私</span>
+          <button class="sidebar-item" type="button" data-tab="privacy" title="Privacy">
+            <img class="sidebar-item-icon" src="./assets/friend-hub/icon-privacy.svg" alt="" />
+            <span class="sidebar-item-label">Privacy</span>
+          </button>
+          <button id="advancedModeButton" class="sidebar-item settings-nav-item" type="button" data-tab="behavior" title="Settings">
+            <img class="sidebar-item-icon" src="./assets/friend-hub/icon-settings.svg" alt="" />
+            <span class="sidebar-item-label">Settings</span>
           </button>
           <button class="sidebar-item sidebar-item-adv" type="button" data-tab="library" data-advanced="true">
-            <span class="sidebar-item-icon">⊞</span>
-            <span class="sidebar-item-label">形象库</span>
+            <span class="sidebar-item-label">Companion Library</span>
           </button>
           <button class="sidebar-item sidebar-item-adv" type="button" data-tab="profile" data-advanced="true">
-            <span class="sidebar-item-icon">✿</span>
-            <span class="sidebar-item-label">档案</span>
+            <span class="sidebar-item-label">Profile</span>
           </button>
           <button class="sidebar-item sidebar-item-adv" type="button" data-tab="interaction" data-advanced="true">
-            <span class="sidebar-item-icon">↺</span>
-            <span class="sidebar-item-label">互动</span>
+            <span class="sidebar-item-label">Interaction</span>
           </button>
           <button class="sidebar-item sidebar-item-adv" type="button" data-tab="weather" data-advanced="true">
-            <span class="sidebar-item-icon">☁</span>
-            <span class="sidebar-item-label">天气</span>
+            <span class="sidebar-item-label">Weather</span>
           </button>
           <button class="sidebar-item sidebar-item-adv" type="button" data-tab="behavior" data-advanced="true">
-            <span class="sidebar-item-icon">⚙</span>
-            <span class="sidebar-item-label">行为</span>
+            <span class="sidebar-item-label">Behavior</span>
           </button>
         </div>
         <div class="sidebar-footer">
-          <button id="advancedModeButton" class="adv-btn" type="button">高级设置</button>
+          <article class="sidebar-quiet-card">
+            <div class="sidebar-quiet-title">
+              <span>Quiet boundary</span>
+              <label class="replica-toggle">
+                <input id="homeQuietInput" type="checkbox" />
+                <span></span>
+              </label>
+            </div>
+            <strong id="homeQuietStateText">On · Until 11:30 PM</strong>
+            <p>Silences notifications and companion activity during quiet hours.</p>
+            <button id="homeQuietAdjustButton" class="sidebar-adjust-button" type="button">Adjust</button>
+          </article>
+          <div class="sidebar-user">
+            <img src="./assets/friend-hub/avatar-lena.png" alt="" />
+            <div>
+              <strong>Lena</strong>
+              <span><i></i> Online</span>
+            </div>
+            <img class="sidebar-user-chevron" src="./assets/friend-hub/icon-user-chevrons.svg" alt="" />
+          </div>
         </div>
       </nav>
       <div class="content-shell">
         <header class="content-header">
           <p id="activePetText" class="header-sub">把一个真实的人放到桌面上陪你</p>
-          <button id="saveButton" class="btn-primary" type="button">保存</button>
+          <button id="saveButton" class="btn-primary button-with-icon" type="button">
+            <img class="button-icon" src="./assets/friend-hub/icon-settings.svg" alt="" />
+            <span>保存更改</span>
+          </button>
         </header>
         <div class="content-scroll">
           <form id="settingsForm">
             <section class="panel home-panel active" data-panel="home">
-              <div class="home-hero">
-                <div class="home-identity">
-                  <figure class="home-avatar-frame">
-                    <img id="homeCompanionImage" src="../../assets/pets/pixel-girl-2/preview.png" alt="桌面陪伴预览" />
-                  </figure>
-                  <div>
-                    <p class="eyebrow">Relationship Home</p>
-                    <h2 id="homeCompanionName">还没有添加关系对象</h2>
-                    <p id="homeCompanionMeta" class="home-meta">先和朋友互换邀请码，把对方做成桌面陪伴。</p>
-                    <p id="homeCompanionNote" class="home-note">这里应该只保留朋友最常用的动作。</p>
-                    <div class="home-presence-list" aria-label="关系状态摘要">
-                      <span>
-                        <strong id="homeRelationDetail">等待添加</strong>
-                        <small>关系</small>
-                      </span>
-                      <span>
-                        <strong id="homeConnectionDetail">未连接</strong>
-                        <small>连接</small>
-                      </span>
-                      <span>
-                        <strong id="homeAvatarDetail">未制作</strong>
-                        <small>形象</small>
-                      </span>
-                    </div>
+              <div class="friends-hub">
+                <aside class="friends-directory" aria-label="朋友列表">
+                  <div class="directory-heading">
+                    <h2>Friends</h2>
+                    <button id="homeCreateInviteButton" class="replica-add-button" type="button">
+                      <img src="./assets/friend-hub/icon-add.svg" alt="" />
+                      <span>Add by Invite</span>
+                    </button>
                   </div>
-                </div>
-                <div class="home-hero-side">
-                    <span id="homeConnectionBadge" class="status-badge" data-state="disconnected">未连接</span>
-                    <p id="homeSyncText">桌面陪伴服务准备中</p>
-                  </div>
-                </div>
 
-                <div class="home-grid">
+                  <label class="friend-search">
+                    <img src="./assets/friend-hub/icon-search.svg" alt="" />
+                    <input id="homeFriendSearchInput" type="text" maxlength="40" placeholder="Find a friend..." />
+                  </label>
+
+                  <div id="homeStartStrip" class="home-start-strip" data-state="disconnected" aria-live="polite">
+                    <span class="home-start-orb"></span>
+                    <div>
+                      <strong id="homeStartTitle">Connect this computer</strong>
+                      <small id="homeStartHint">Give this desktop a quiet place in your private circle.</small>
+                    </div>
+                    <button id="homeStartActionButton" type="button">Connect</button>
+                  </div>
+
+                  <select id="homeFriendSelect" class="visually-hidden" aria-label="当前朋友"></select>
+                  <div id="homeFriendList" class="home-friend-list" role="list">
+                    <article class="home-empty-card home-empty-card-static">
+                      <img src="./assets/friend-hub/icon-invite-row.svg" alt="" />
+                      <strong>Start with someone real</strong>
+                      <p>A private invite turns this space into something shared.</p>
+                    </article>
+                  </div>
+
+                  <button id="homeCopyInviteButton" class="home-invite-row" type="button">
+                    <img src="./assets/friend-hub/icon-invite-row.svg" alt="" />
+                    <span>Invite a friend</span>
+                    <b>›</b>
+                  </button>
+                  <div class="replica-hidden-controls">
+                    <button id="homeConnectButton" type="button">Connect</button>
+                    <input id="homeInviteCodeInput" type="text" readonly />
+                    <input id="homeAcceptInviteInput" type="text" maxlength="32" />
+                    <button id="homeAcceptInviteButton" type="button">Accept</button>
+                    <span id="homeConnectionBadge" data-state="disconnected">未连接</span>
+                    <span id="homeSyncText">桌面陪伴服务准备中</span>
+                  </div>
+                </aside>
+
+                <section class="friend-focus" aria-label="朋友详情">
+                  <article class="friend-focus-hero">
+                    <img id="homeFriendAvatarImage" class="home-profile-avatar" src="./assets/friend-hub/hero-kai-avatar.png" alt="" />
+                    <div class="home-identity">
+                      <div>
+                        <h2><span id="homeCompanionName">Someone close</span> <span id="homeCompanionStatusText">is waiting</span> <i class="presence-dot"></i></h2>
+                        <p id="homeCompanionMeta" class="home-meta"><i class="presence-dot"></i> Private circle</p>
+                        <p id="homeCompanionNote" class="home-note"><i class="away-dot"></i> Add a real person when you're ready</p>
+                        <div class="home-presence-list" aria-label="关系状态摘要">
+                          <span>
+                            <strong id="homeRelationDetail">Partner</strong>
+                            <small>关系</small>
+                          </span>
+                          <span>
+                            <strong id="homeConnectionDetail">Connected</strong>
+                            <small>连接</small>
+                          </span>
+                          <span>
+                            <strong id="homeAvatarDetail">On desktop</strong>
+                            <small>形象</small>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <img id="homeCompanionImage" class="home-focus-pet" src="./assets/friend-hub/pet-kai.png" alt="" />
+                    <div class="home-hero-actions">
+                      <button id="homeMakeAvatarButton" type="button">Create look</button>
+                      <button id="homeImportAvatarButton" type="button">Import...</button>
+                    </div>
+                  </article>
+
+                  <article class="settings-card recent-moments-card">
+                    <div class="card-title-row">
+                      <h3>Recent moments</h3>
+                    <button id="homeOpenMessagesButton" class="replica-view-button" type="button" title="Open Messages">View all</button>
+                    </div>
+                    <p id="homeRecentMessageText" class="home-recent-message">最近消息会出现在这里。</p>
+                    <div id="homeRecentMomentsList" class="home-recent-list" role="list">
+                      <article class="home-recent-empty home-recent-empty-static">
+                        <span class="home-recent-empty-mark"></span>
+                        <div>
+                          <strong>A quiet space for someone real</strong>
+                          <p>Start with one person you actually care about.</p>
+                        </div>
+                      </article>
+                    </div>
+                  </article>
+
                   <article class="settings-card home-message-card">
                     <div class="card-title-row">
-                      <h3>给对方发一句话</h3>
+                      <h3>Send a quick note</h3>
                       <strong id="homeMessageCount">0/140</strong>
                     </div>
                     <label>
-                      <span>发送给</span>
-                      <select id="homeFriendSelect"></select>
+                      <textarea id="homeMessageInput" rows="3" maxlength="140" placeholder="Write a short note..."></textarea>
                     </label>
-                    <label>
-                      <span>短消息</span>
-                      <textarea id="homeMessageInput" rows="4" maxlength="140" placeholder="写一句会从你的桌面陪伴发出的短消息"></textarea>
-                    </label>
+                    <p id="homeMessageHelper" class="home-message-helper">A small note is enough.</p>
                     <div id="homeQuickMessages" class="quick-message-row" aria-label="快捷消息">
-                      <button type="button" data-message="想你啦，来看看我的桌面。">想你啦</button>
-                      <button type="button" data-message="今天也辛苦了，记得休息一下。">辛苦啦</button>
-                      <button type="button" data-message="我在这边陪你，慢慢来。">我在</button>
-                      <button type="button" data-message="加油，结束后我们聊聊。">加油</button>
+                      <button type="button" data-message="I'm thinking of you."><img src="./assets/friend-hub/chip-thinking.svg" alt="" /><span>I'm thinking of you.</span></button>
+                      <button type="button" data-message="Take a good break."><img src="./assets/friend-hub/chip-break.svg" alt="" /><span>Take a good break.</span></button>
+                      <button type="button" data-message="You can do this!"><img src="./assets/friend-hub/chip-boost.svg" alt="" /><span>You can do this!</span></button>
+                      <button type="button" data-message="Let's catch up later."><img src="./assets/friend-hub/chip-catchup.svg" alt="" /><span>Let's catch up later.</span></button>
+                      <button class="quick-plus" type="button" data-message="+" title="Write your own note" aria-label="Write your own note">+</button>
                     </div>
-                    <p id="homeRecentMessageText" class="home-recent-message">最近消息会出现在这里。</p>
-                    <div class="inline right">
-                      <button id="homeSendButton" class="btn-primary send-action" type="button">发送</button>
-                    </div>
+                    <button id="homeSendButton" class="replica-send-button" type="button" disabled>
+                      <img src="./assets/friend-hub/icon-send.svg" alt="" />
+                      <span>Send</span>
+                    </button>
                   </article>
+                </section>
+              </div>
 
-                  <article class="settings-card home-connect-card">
-                    <div class="card-title-row">
-                      <h3>添加重要的人</h3>
-                      <button id="homeConnectButton" class="btn-secondary" type="button">连接</button>
+              <div id="homeInviteDialog" class="home-invite-dialog" hidden aria-hidden="true">
+                <button id="homeInviteBackdrop" class="home-invite-backdrop" type="button" aria-label="Close invite dialog"></button>
+                <section class="home-invite-sheet" role="dialog" aria-modal="true" aria-labelledby="homeInviteTitle">
+                  <header class="home-invite-head">
+                    <div>
+                      <p>Invite & connect</p>
+                      <h3 id="homeInviteTitle">Add someone close</h3>
                     </div>
-                    <label>
-                      <span>我的邀请码</span>
-                      <div class="input-action">
-                        <input id="homeInviteCodeInput" type="text" readonly />
-                        <button id="homeCopyInviteButton" class="icon-action" type="button">复制</button>
+                    <button id="homeInviteCloseButton" class="home-invite-close" type="button" aria-label="Close invite dialog">×</button>
+                  </header>
+
+                  <div class="home-invite-body">
+                    <article class="home-invite-card">
+                      <div class="home-invite-card-title">
+                        <span>1</span>
+                        <div>
+                          <strong>Share your invite</strong>
+                          <small>Send this code to a friend so they can add your desktop companion.</small>
+                        </div>
                       </div>
-                    </label>
-                    <div class="inline">
-                      <button id="homeCreateInviteButton" class="btn-primary" type="button">生成邀请码</button>
-                    </div>
-                    <label>
-                      <span>输入对方邀请码</span>
-                      <div class="input-action">
-                        <input id="homeAcceptInviteInput" type="text" maxlength="32" placeholder="例如 LENA-MOCHI-7X3K" />
-                        <button id="homeAcceptInviteButton" class="btn-primary" type="button">添加</button>
+                      <label class="home-invite-field" for="homeInviteCodeDisplay">
+                        <span>Your invite code</span>
+                        <input id="homeInviteCodeDisplay" type="text" readonly value="尚未生成" />
+                      </label>
+                      <div class="home-invite-actions">
+                        <button id="homeInviteCreateButton" class="home-invite-secondary" type="button">Generate</button>
+                        <button id="homeInviteCopyButton" class="home-invite-primary" type="button">Copy Invite</button>
                       </div>
-                    </label>
-                  </article>
+                    </article>
 
-                  <article class="settings-card home-avatar-card">
-                    <div class="card-title-row">
-                      <h3>把对方做成桌面陪伴</h3>
-                      <span class="dev-badge">DIY</span>
-                    </div>
-                    <p class="field-note">选择或导入一个能代表对方的形象，再绑定到这个关系对象。后续 gpt-image2 生成结果也从这里进入。</p>
-                    <div class="inline">
-                      <button id="homeMakeAvatarButton" class="btn-primary" type="button">制作形象</button>
-                      <button id="homeImportAvatarButton" class="btn-secondary" type="button">导入形象...</button>
-                    </div>
-                  </article>
-
-                  <article class="settings-card home-quiet-card">
-                    <div class="card-title-row">
-                      <h3>安静边界</h3>
-                    </div>
-                    <label class="switch switch-card">
-                      <input id="homeQuietInput" type="checkbox" />
-                      <span>
-                        <strong>专注时不弹气泡</strong>
-                        <small>连接不断开，消息会留在记录里</small>
-                      </span>
-                    </label>
-                    <div class="inline">
-                      <button id="homeOpenMessagesButton" class="btn-secondary" type="button">查看消息</button>
-                    </div>
-                  </article>
-                </div>
-              </section>
+                    <article class="home-invite-card">
+                      <div class="home-invite-card-title">
+                        <span>2</span>
+                        <div>
+                          <strong>Enter their invite</strong>
+                          <small>Paste the code your friend sends you. Both sides stay in control.</small>
+                        </div>
+                      </div>
+                      <label class="home-invite-field" for="homeInviteAcceptCodeInput">
+                        <span>Friend invite code</span>
+                        <input id="homeInviteAcceptCodeInput" type="text" maxlength="32" autocomplete="off" placeholder="Paste invite code..." />
+                      </label>
+                      <p id="homeInviteHint" class="home-invite-hint">Invite codes are temporary. Ask your friend for a fresh one if it does not work.</p>
+                      <div class="home-invite-actions">
+                        <button id="homeInviteAcceptCodeButton" class="home-invite-primary" type="button" disabled>Add Friend</button>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+              </div>
+            </section>
 
               <section class="panel" data-panel="profile">
               <div class="section">
@@ -231,7 +311,7 @@
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Companion Studio</p>
-                <h2>制作对方的桌面陪伴</h2>
+                <h2>制作对方的桌面形象</h2>
                 <p class="panel-lead">为一个真实的人选择关系称呼、绑定专属形象，或生成 gpt-image2 提示词后导入结果。</p>
               </div>
             </div>
@@ -281,7 +361,7 @@
                 </div>
                 <div class="binding-summary">
                   <strong id="diyBindingTitle">请选择一个关系对象</strong>
-                  <span id="diyBindingMeta">选择关系对象和宠物包后，点击绑定并保存。</span>
+                  <span id="diyBindingMeta">选择关系对象和形象包后，点击绑定并保存。</span>
                 </div>
                 <ol class="diy-steps">
                   <li>先通过邀请码添加真实关系对象。</li>
@@ -342,7 +422,7 @@
                   <div class="row slider-row">
                     <div class="row-text">
                       <span class="row-label">情绪频率</span>
-                      <span class="row-desc">控制宠物自动表达情绪的频率</span>
+                      <span class="row-desc">控制桌面陪伴自动表达的频率</span>
                     </div>
                     <div class="slider-ctl">
                       <input id="emotionFrequencyInput" class="range-slider" type="range" min="0" max="1" step="0.05" />
@@ -359,21 +439,39 @@
           <section class="panel connect-panel" data-panel="connect">
             <div class="panel-heading">
               <div>
-                <p class="eyebrow">Pet Connect</p>
-                <h2>朋友桌宠连接</h2>
-                <p class="panel-lead">用自己的桌宠添加朋友、查看状态，并通过真实服务器互相传短消息。</p>
+                <p class="eyebrow">Real Connection</p>
+                <h2>邀请与在线状态</h2>
+                <p class="panel-lead">通过真实服务器添加朋友、查看对方在线状态，并让你的桌面陪伴替你传一句短消息。</p>
               </div>
               <label class="switch hero-switch">
                 <input id="connectEnabledInput" type="checkbox" />
                 <span>
                   <strong>开启连接</strong>
-                  <small>保持桌宠在线接收朋友来信</small>
+                  <small>保持在线接收朋友来信</small>
                 </span>
               </label>
             </div>
 
+            <div class="module-status-strip" aria-label="连接状态概览">
+              <span>
+                <img src="./assets/friend-hub/icon-invites.svg" alt="" />
+                <strong id="connectSummaryState">未连接</strong>
+                <small>服务器</small>
+              </span>
+              <span>
+                <img src="./assets/friend-hub/icon-friends.svg" alt="" />
+                <strong id="connectSummaryFriendCount">0</strong>
+                <small>已添加</small>
+              </span>
+              <span>
+                <img src="./assets/friend-hub/icon-invite-row.svg" alt="" />
+                <strong id="connectSummaryInvite">未生成</strong>
+                <small>邀请码</small>
+              </span>
+            </div>
+
             <div class="connect-grid">
-              <article class="settings-card">
+              <article class="settings-card connection-card">
                 <div class="card-title-row">
                   <h3>服务器连接</h3>
                   <span id="connectStateBadge" class="status-badge" data-state="disconnected">未连接</span>
@@ -393,7 +491,10 @@
                   </label>
                 </div>
                 <div class="inline">
-                  <button id="connectRegisterButton" class="btn-primary" type="button">注册 / 连接</button>
+                  <button id="connectRegisterButton" class="btn-primary button-with-icon" type="button">
+                    <img class="button-icon" src="./assets/friend-hub/icon-invites.svg" alt="" />
+                    <span>注册 / 连接</span>
+                  </button>
                   <button id="connectNowButton" class="btn-secondary" type="button">立即连接</button>
                 </div>
               </article>
@@ -407,7 +508,7 @@
                   <input id="connectDisplayNameInput" type="text" maxlength="32" />
                 </label>
                 <label>
-                  <span>桌宠状态</span>
+                  <span>在线状态</span>
                   <select id="connectStatusSelect">
                     <option value="online">在线</option>
                     <option value="away">离开</option>
@@ -419,7 +520,7 @@
                   <input id="connectAllowIncomingInput" type="checkbox" />
                   <span>
                     <strong>允许好友来信</strong>
-                    <small>只有已添加的朋友可以通过桌宠联系你</small>
+                    <small>只有已添加的朋友可以通过桌面陪伴联系你</small>
                   </span>
                 </label>
               </article>
@@ -438,26 +539,26 @@
                 <div class="inline">
                   <button id="connectCreateInviteButton" class="btn-primary" type="button">生成邀请码</button>
                 </div>
-                <p class="field-note">邀请码短期有效，用来把朋友的桌宠加入你的好友列表。</p>
+                <p class="field-note">邀请码短期有效，用来把朋友的桌面陪伴加入你的好友列表。</p>
               </article>
 
               <article class="settings-card">
                 <div class="card-title-row">
-                  <h3>添加朋友桌宠</h3>
+                  <h3>添加朋友</h3>
                 </div>
                 <label>
                   <span>输入好友邀请码</span>
                   <div class="input-action">
                     <input id="connectAcceptInviteInput" type="text" maxlength="32" placeholder="例如 LENA-MOCHI-7X3K" />
-                    <button id="connectAcceptInviteButton" class="btn-primary" type="button">添加</button>
+                    <button id="connectAcceptInviteButton" class="btn-primary" type="button" disabled>添加</button>
                   </div>
                 </label>
-                <p class="field-note">添加成功后，你们可以看到彼此的桌宠状态并互相发送短消息。</p>
+                <p class="field-note">添加成功后，你们可以看到彼此状态并互相发送短消息。</p>
               </article>
 
               <article class="settings-card friends-card">
                 <div class="card-title-row">
-                  <h3>关系桌宠</h3>
+                  <h3>关系对象</h3>
                 </div>
                 <div id="connectFriendList" class="friend-list" role="list"></div>
                 <p class="field-note" id="connectRecentMessageText">暂无来信</p>
@@ -465,7 +566,7 @@
 
               <article class="settings-card relationship-card">
                 <div class="card-title-row">
-                  <h3>关系设置</h3>
+                  <h3>关系细节</h3>
                   <span class="dev-badge">本地私有</span>
                 </div>
                 <label>
@@ -487,12 +588,12 @@
                 </label>
                 <label>
                   <span>关系备注</span>
-                  <textarea id="connectFriendNoteInput" rows="3" maxlength="120" placeholder="例如：工作时陪我的桌宠，提醒我下班一起吃饭。"></textarea>
+                  <textarea id="connectFriendNoteInput" rows="3" maxlength="120" placeholder="例如：工作时陪我的桌面陪伴，提醒我下班一起吃饭。"></textarea>
                 </label>
                 <label class="switch switch-card">
                   <input id="connectFriendMuteInput" type="checkbox" />
                   <span>
-                    <strong>静默这个关系桌宠</strong>
+                    <strong>静默这个人</strong>
                     <small>保留连接，但不让这个人弹出桌面气泡</small>
                   </span>
                 </label>
@@ -504,7 +605,7 @@
                   <h3>发送消息</h3>
                 </div>
                 <label>
-                  <span>选择关系桌宠</span>
+                  <span>选择关系对象</span>
                   <select id="connectFriendSelect"></select>
                 </label>
                 <label>
@@ -512,12 +613,15 @@
                     <span>短消息</span>
                     <strong id="connectMessageCount">0/140</strong>
                   </span>
-                  <textarea id="connectOutgoingMessageInput" rows="4" maxlength="140" placeholder="写一句会从你的桌宠发出的短消息"></textarea>
+                  <textarea id="connectOutgoingMessageInput" rows="4" maxlength="140" placeholder="写一句会从你的桌面陪伴发出的短消息"></textarea>
                 </label>
                 <div class="inline right">
-                  <button id="connectSendMessageButton" class="btn-primary send-action" type="button">发送</button>
+                  <button id="connectSendMessageButton" class="btn-primary send-action button-with-icon" type="button">
+                    <img class="button-icon" src="./assets/friend-hub/icon-send.svg" alt="" />
+                    <span>发送</span>
+                  </button>
                 </div>
-                <p class="field-note">好友在线时会实时收到气泡；离线时会在下次上线后送达。</p>
+                <p class="field-note">好友在线时会实时收到气泡；离线时会在下一次上线后送达。</p>
               </article>
 
               <article class="settings-card">
@@ -528,7 +632,7 @@
                   <input id="connectDoNotDisturbInput" type="checkbox" />
                   <span>
                     <strong>来信勿扰</strong>
-                    <small>保持在线，但不弹出桌面气泡</small>
+                  <small>保持在线，但不弹出桌面气泡</small>
                   </span>
                 </label>
                 <p class="field-note">适合专注工作时使用，来信仍会记录在最近消息里。</p>
@@ -540,7 +644,7 @@
                   <span class="dev-badge">本地测试</span>
                 </div>
                 <label>
-                  <span>测试朋友桌宠名</span>
+                  <span>测试朋友形象名</span>
                   <input id="connectTestFriendPetNameInput" type="text" maxlength="32" />
                 </label>
                 <label>
@@ -559,11 +663,23 @@
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Messages</p>
-                <h2>关系消息</h2>
+                <h2>消息与最近时刻</h2>
                 <p class="panel-lead">短消息会通过真实连接抵达对方桌面，由对方的桌面陪伴显示出来。</p>
               </div>
             </div>
             <div class="messages-grid">
+              <article class="settings-card messages-person-card">
+                <div class="messages-person">
+                  <img id="messagesFriendAvatarImage" src="./assets/friend-hub/avatar-kai.png" alt="" />
+                  <div>
+                    <p>当前发送给</p>
+                    <strong id="messagesFriendName">Kai</strong>
+                    <span id="messagesFriendMeta">On desktop</span>
+                  </div>
+                  <b id="messagesFriendStatus">在线</b>
+                </div>
+              </article>
+
               <article class="settings-card messages-timeline-card">
                 <div class="card-title-row">
                   <h3>最近来往</h3>
@@ -585,16 +701,19 @@
                     <span>短消息</span>
                     <strong id="messagesQuickReplyCount">0/140</strong>
                   </span>
-                  <textarea id="messagesQuickReplyInput" rows="5" maxlength="140" placeholder="写一句从你的桌宠发出的回复"></textarea>
+                  <textarea id="messagesQuickReplyInput" rows="5" maxlength="140" placeholder="写一句从你的桌面陪伴发出的回复"></textarea>
                 </label>
                 <div id="messagesQuickMessages" class="quick-message-row" aria-label="消息快捷输入">
-                  <button type="button" data-message="我看到啦，晚点认真回你。">看到啦</button>
-                  <button type="button" data-message="今天也辛苦了，先抱抱自己。">辛苦啦</button>
-                  <button type="button" data-message="我在这边陪你，慢慢来。">我在</button>
-                  <button type="button" data-message="结束后告诉我一声，我们聊聊。">等你</button>
+                  <button type="button" data-message="我看到啦，晚点认真回你。"><img src="./assets/friend-hub/chip-thinking.svg" alt="" /><span>看到啦</span></button>
+                  <button type="button" data-message="今天也辛苦了，先休息一下。"><img src="./assets/friend-hub/chip-break.svg" alt="" /><span>辛苦啦</span></button>
+                  <button type="button" data-message="我在这边陪你，慢慢来。"><img src="./assets/friend-hub/chip-boost.svg" alt="" /><span>我在</span></button>
+                  <button type="button" data-message="结束后告诉我一声，我们聊聊。"><img src="./assets/friend-hub/chip-catchup.svg" alt="" /><span>等你</span></button>
                 </div>
                 <div class="inline right">
-                  <button id="messagesSendButton" class="btn-primary send-action" type="button">发送</button>
+                  <button id="messagesSendButton" class="btn-primary send-action button-with-icon" type="button">
+                    <img class="button-icon" src="./assets/friend-hub/icon-send.svg" alt="" />
+                    <span>发送</span>
+                  </button>
                 </div>
                 <p class="field-note">发送后会走真实 Pet Connect 链路，对方在线时实时显示气泡。</p>
               </article>
@@ -606,10 +725,23 @@
               <div>
                 <p class="eyebrow">Privacy</p>
                 <h2>隐私与边界</h2>
-                <p class="panel-lead">控制谁可以联系你、什么时候弹气泡，以及某个关系桌宠是否静默。</p>
+                <p class="panel-lead">控制谁可以联系你、什么时候弹气泡，以及某个关系对象是否静默。</p>
               </div>
             </div>
             <div class="privacy-grid">
+              <article class="settings-card privacy-summary-card">
+                <div class="card-title-row">
+                  <h3>当前边界</h3>
+                  <span class="dev-badge">本机生效</span>
+                </div>
+                <div class="privacy-summary-list">
+                  <span><strong id="privacySummaryState">在线</strong><small>我的状态</small></span>
+                  <span><strong id="privacySummaryIncoming">允许</strong><small>朋友来信</small></span>
+                  <span><strong id="privacySummaryQuiet">关闭</strong><small>勿扰</small></span>
+                  <span><strong id="privacySummaryPresence">可见</strong><small>在线可见</small></span>
+                </div>
+              </article>
+
               <article class="settings-card">
                 <div class="card-title-row">
                   <h3>全局接收</h3>
@@ -626,7 +758,7 @@
                 <label class="switch switch-card">
                   <input id="privacyAllowIncomingInput" type="checkbox" />
                   <span>
-                    <strong>允许关系桌宠来信</strong>
+                    <strong>允许关系对象来信</strong>
                     <small>关闭后仍保留连接，但不会接收好友桌面来信提醒</small>
                   </span>
                 </label>
@@ -637,14 +769,21 @@
                     <small>保持在线并记录消息，但不弹桌面气泡</small>
                   </span>
                 </label>
+                <label class="switch switch-card">
+                  <input id="privacyHidePresenceInput" type="checkbox" />
+                  <span>
+                    <strong>隐藏我的在线状态</strong>
+                    <small>你仍可使用连接，但朋友会看到你暂时离线</small>
+                  </span>
+                </label>
               </article>
 
               <article class="settings-card">
                 <div class="card-title-row">
-                  <h3>单个关系静默</h3>
+                  <h3>单个关系边界</h3>
                 </div>
                 <label>
-                  <span>关系桌宠</span>
+                  <span>关系对象</span>
                   <select id="privacyFriendSelect"></select>
                 </label>
                 <label class="switch switch-card">
@@ -658,7 +797,16 @@
                   <button id="privacyApplyButton" class="btn-primary" type="button">保存隐私设置</button>
                   <button id="privacyClearMessagesButton" class="btn-secondary" type="button">清空本地消息</button>
                 </div>
-                <p class="field-note">删除好友、拉黑和隐藏在线状态会在下一轮继续补齐。</p>
+                <div class="privacy-danger-zone">
+                  <div>
+                    <strong>关系管理</strong>
+                    <small>删除会断开双方关系；屏蔽会断开关系并阻止对方再次发来消息。</small>
+                  </div>
+                  <div class="privacy-danger-actions">
+                    <button id="privacyRemoveFriendButton" class="btn-secondary" type="button">删除关系</button>
+                    <button id="privacyBlockFriendButton" class="btn-danger" type="button">屏蔽这个人</button>
+                  </div>
+                </div>
               </article>
             </div>
           </section>
@@ -687,15 +835,22 @@
             </section>
 
           <section class="panel behavior-panel" data-panel="behavior">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Settings</p>
+                <h2>基础设置</h2>
+                <p class="panel-lead">这里只保留桌面陪伴运行所需的轻量控制，复杂能力会继续收进更深的高级区。</p>
+              </div>
+            </div>
               <div class="section">
                 <p class="section-title">行为开关</p>
                 <div class="section-rows">
                   <label class="row switch-row" for="behaviorEnabledInput">
-                    <div class="row-text"><span class="row-label">自动动作</span><span class="row-desc">宠物自动执行随机动作</span></div>
+                    <div class="row-text"><span class="row-label">自动动作</span><span class="row-desc">桌面陪伴自动执行轻量动作</span></div>
                     <span class="ios-switch"><input id="behaviorEnabledInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="showNameInput">
-                    <div class="row-text"><span class="row-label">显示名字</span><span class="row-desc">在宠物下方显示名称标签</span></div>
+                    <div class="row-text"><span class="row-label">显示名字</span><span class="row-desc">在形象下方显示名称标签</span></div>
                     <span class="ios-switch"><input id="showNameInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="topmostInput">
@@ -703,19 +858,19 @@
                     <span class="ios-switch"><input id="topmostInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="inputReactionsInput">
-                    <div class="row-text"><span class="row-label">点击反应</span><span class="row-desc">点击宠物时触发动画反应</span></div>
+                    <div class="row-text"><span class="row-label">点击反应</span><span class="row-desc">点击形象时触发动画反应</span></div>
                     <span class="ios-switch"><input id="inputReactionsInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="hideOnHoverInput">
-                    <div class="row-text"><span class="row-label">悬停隐藏</span><span class="row-desc">鼠标悬停时宠物渐渐消失</span></div>
+                    <div class="row-text"><span class="row-label">悬停隐藏</span><span class="row-desc">鼠标悬停时形象渐渐消失</span></div>
                     <span class="ios-switch"><input id="hideOnHoverInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="passThroughInput">
-                    <div class="row-text"><span class="row-label">点击穿透</span><span class="row-desc">鼠标事件穿过宠物窗口</span></div>
+                    <div class="row-text"><span class="row-label">点击穿透</span><span class="row-desc">鼠标事件穿过桌面陪伴窗口</span></div>
                     <span class="ios-switch"><input id="passThroughInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="keepInScreenInput">
-                    <div class="row-text"><span class="row-label">限制在屏幕内</span><span class="row-desc">防止宠物漫游到屏幕外</span></div>
+                    <div class="row-text"><span class="row-label">限制在屏幕内</span><span class="row-desc">防止形象移动到屏幕外</span></div>
                     <span class="ios-switch"><input id="keepInScreenInput" type="checkbox" /><span class="ios-track"></span></span>
                   </label>
                   <label class="row switch-row" for="taskbarVisibleInput">
@@ -730,7 +885,7 @@
                   <div class="row slider-row">
                     <div class="row-text">
                       <span class="row-label">尺寸</span>
-                      <span class="row-desc">调整宠物在屏幕上的大小</span>
+                      <span class="row-desc">调整桌面形象在屏幕上的大小</span>
                     </div>
                     <div class="slider-ctl">
                       <input id="scaleInput" class="range-slider" type="range" min="0.75" max="3" step="0.25" />
@@ -740,7 +895,7 @@
                   <div class="row slider-row">
                     <div class="row-text">
                       <span class="row-label">透明度</span>
-                      <span class="row-desc">调整宠物窗口的透明程度</span>
+                      <span class="row-desc">调整桌面陪伴窗口的透明程度</span>
                     </div>
                     <div class="slider-ctl">
                       <input id="opacityInput" class="range-slider" type="range" min="0.35" max="1" step="0.05" />
@@ -750,7 +905,7 @@
                   <div class="row slider-row">
                     <div class="row-text">
                       <span class="row-label">悬停隐藏延迟</span>
-                      <span class="row-desc">鼠标悬停多久后宠物消失</span>
+                      <span class="row-desc">鼠标悬停多久后形象隐藏</span>
                     </div>
                     <div class="slider-ctl">
                       <input id="hideOnHoverDelayInput" class="range-slider" type="range" min="0" max="5" step="0.25" />

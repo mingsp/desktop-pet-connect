@@ -14,6 +14,7 @@ const INVITE_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const clients = new Map();
 let saveTimer = null;
 let store = {
+  blocks: {},
   friends: {},
   invites: {},
   queuedMessages: {},
@@ -50,12 +51,18 @@ function loadStore() {
     store = JSON.parse(fs.readFileSync(STORE_PATH, "utf8"));
   } catch (_error) {
     store = {
+      blocks: {},
       friends: {},
       invites: {},
       queuedMessages: {},
       users: {},
     };
   }
+  store.blocks = store.blocks && typeof store.blocks === "object" ? store.blocks : {};
+  store.friends = store.friends && typeof store.friends === "object" ? store.friends : {};
+  store.invites = store.invites && typeof store.invites === "object" ? store.invites : {};
+  store.queuedMessages = store.queuedMessages && typeof store.queuedMessages === "object" ? store.queuedMessages : {};
+  store.users = store.users && typeof store.users === "object" ? store.users : {};
 }
 
 function saveStoreSoon() {
@@ -103,10 +110,11 @@ function readJsonBody(request) {
   });
 }
 
-function publicUser(userId) {
+function publicUser(userId, viewerId = "") {
   const user = store.users[userId];
   if (!user) return null;
-  const online = clients.has(userId);
+  const hidePresence = Boolean(user.hidePresence && viewerId !== userId);
+  const online = clients.has(userId) && !hidePresence;
   return {
     displayName: user.displayName,
     lastSeen: user.lastSeen || 0,
@@ -121,26 +129,65 @@ function friendIds(userId) {
   return Array.from(new Set(store.friends[userId] || []));
 }
 
+function blockedIds(userId) {
+  return Array.from(new Set(store.blocks[userId] || []));
+}
+
+function isBlocked(blockerId, blockedUserId) {
+  return blockedIds(blockerId).includes(blockedUserId);
+}
+
+function areBlocked(a, b) {
+  return isBlocked(a, b) || isBlocked(b, a);
+}
+
 function friendList(userId) {
-  return friendIds(userId).map(publicUser).filter(Boolean);
+  return friendIds(userId)
+    .filter((friendId) => !areBlocked(userId, friendId))
+    .map((friendId) => publicUser(friendId, userId))
+    .filter(Boolean);
 }
 
 function areFriends(a, b) {
-  return friendIds(a).includes(b);
+  return friendIds(a).includes(b) && !areBlocked(a, b);
 }
 
 function addFriendship(a, b) {
+  if (areBlocked(a, b)) return false;
   store.friends[a] = Array.from(new Set([...(store.friends[a] || []), b]));
   store.friends[b] = Array.from(new Set([...(store.friends[b] || []), a]));
+  return true;
+}
+
+function removeQueuedMessagesBetween(a, b) {
+  for (const recipientId of [a, b]) {
+    const queue = store.queuedMessages[recipientId] || [];
+    store.queuedMessages[recipientId] = queue.filter((message) => {
+      const fromId = message?.from?.userId || "";
+      const toId = message?.toUserId || recipientId;
+      return !((fromId === a && toId === b) || (fromId === b && toId === a));
+    });
+  }
+}
+
+function removeFriendship(a, b) {
+  store.friends[a] = friendIds(a).filter((friendId) => friendId !== b);
+  store.friends[b] = friendIds(b).filter((friendId) => friendId !== a);
+  removeQueuedMessagesBetween(a, b);
+}
+
+function blockUser(blockerId, blockedUserId) {
+  store.blocks[blockerId] = Array.from(new Set([...(store.blocks[blockerId] || []), blockedUserId]));
+  removeFriendship(blockerId, blockedUserId);
 }
 
 function notifyFriends(userId) {
-  const payload = {
-    friend: publicUser(userId),
-    type: "friend-status",
-  };
   for (const friendId of friendIds(userId)) {
-    sendToUser(friendId, payload);
+    if (areBlocked(userId, friendId)) continue;
+    sendToUser(friendId, {
+      friend: publicUser(userId, friendId),
+      type: "friend-status",
+    });
   }
 }
 
@@ -171,6 +218,7 @@ function createUser(profile = {}) {
     authToken,
     createdAt,
     displayName: sanitizeText(profile.displayName, 32, "桌宠用户"),
+    hidePresence: false,
     lastSeen: createdAt,
     petName: sanitizeText(profile.petName, 32, "我的桌宠"),
     status: "online",
@@ -247,10 +295,15 @@ function acceptInvite(userId, code) {
   if (invite.fromUserId === userId) {
     return { error: "不能添加自己的邀请码。" };
   }
+  if (areBlocked(userId, invite.fromUserId)) {
+    return { error: "你们之间的连接已被屏蔽。" };
+  }
   if (!store.users[invite.fromUserId]) {
     return { error: "邀请人不存在。" };
   }
-  addFriendship(userId, invite.fromUserId);
+  if (!addFriendship(userId, invite.fromUserId)) {
+    return { error: "你们之间的连接已被屏蔽。" };
+  }
   delete store.invites[normalized];
   saveStoreSoon();
   return {
@@ -263,6 +316,8 @@ function deliverQueuedMessages(userId) {
   delete store.queuedMessages[userId];
   if (queue.length) saveStoreSoon();
   for (const message of queue) {
+    const fromUserId = message?.from?.userId || "";
+    if (!fromUserId || !areFriends(userId, fromUserId)) continue;
     sendToUser(userId, {
       message,
       type: "message",
@@ -278,6 +333,7 @@ function handleAuthedMessage(ws, data) {
     case "update-profile": {
       const user = store.users[userId];
       user.displayName = sanitizeText(data.profile?.displayName, 32, user.displayName);
+      user.hidePresence = Boolean(data.profile?.hidePresence);
       user.petName = sanitizeText(data.profile?.petName, 32, user.petName);
       user.status = sanitizeText(data.profile?.status, 16, user.status);
       user.lastSeen = now();
@@ -286,7 +342,7 @@ function handleAuthedMessage(ws, data) {
       wsSend(ws, {
         ok: true,
         requestId,
-        self: publicUser(userId),
+        self: publicUser(userId, userId),
         type: "profile-updated",
       });
       break;
@@ -315,7 +371,7 @@ function handleAuthedMessage(ws, data) {
         type: "friend-added",
       });
       sendToUser(result.friend.userId, {
-        friend: publicUser(userId),
+        friend: publicUser(userId, result.friend.userId),
         friends: friendList(result.friend.userId),
         type: "friend-added",
       });
@@ -330,6 +386,54 @@ function handleAuthedMessage(ws, data) {
         requestId,
         type: "friend-list",
       });
+      break;
+    }
+    case "remove-friend": {
+      const targetUserId = sanitizeText(data.userId, 80);
+      if (!store.users[targetUserId] || !friendIds(userId).includes(targetUserId)) {
+        wsError(ws, requestId, "这个关系对象不存在。");
+        break;
+      }
+      removeFriendship(userId, targetUserId);
+      saveStoreSoon();
+      wsSend(ws, {
+        friends: friendList(userId),
+        ok: true,
+        removedUserId: targetUserId,
+        requestId,
+        type: "friend-removed",
+      });
+      sendToUser(targetUserId, {
+        friends: friendList(targetUserId),
+        removedUserId: userId,
+        type: "friend-removed",
+      });
+      notifyFriends(userId);
+      notifyFriends(targetUserId);
+      break;
+    }
+    case "block-user": {
+      const targetUserId = sanitizeText(data.userId, 80);
+      if (!store.users[targetUserId] || targetUserId === userId) {
+        wsError(ws, requestId, "无法屏蔽这个用户。");
+        break;
+      }
+      blockUser(userId, targetUserId);
+      saveStoreSoon();
+      wsSend(ws, {
+        blockedUserId: targetUserId,
+        friends: friendList(userId),
+        ok: true,
+        requestId,
+        type: "friend-blocked",
+      });
+      sendToUser(targetUserId, {
+        friends: friendList(targetUserId),
+        removedUserId: userId,
+        type: "friend-removed",
+      });
+      notifyFriends(userId);
+      notifyFriends(targetUserId);
       break;
     }
     case "send-message": {
@@ -394,6 +498,7 @@ function handleWsMessage(ws, raw) {
 
     const user = store.users[data.userId];
     user.displayName = sanitizeText(data.profile?.displayName, 32, user.displayName);
+    user.hidePresence = Boolean(data.profile?.hidePresence);
     user.petName = sanitizeText(data.profile?.petName, 32, user.petName);
     user.status = sanitizeText(data.profile?.status, 16, "online");
     user.lastSeen = now();
@@ -403,7 +508,7 @@ function handleWsMessage(ws, raw) {
       friends: friendList(data.userId),
       ok: true,
       requestId: data.requestId,
-      self: publicUser(data.userId),
+      self: publicUser(data.userId, data.userId),
       type: "welcome",
     });
     notifyFriends(data.userId);

@@ -49,6 +49,7 @@ const DEFAULT_SETTINGS = {
     displayName: "",
     doNotDisturb: false,
     friends: [],
+    hidePresence: false,
     inviteCode: "",
     inviteExpiresAt: 0,
     lastError: "",
@@ -183,6 +184,7 @@ function sanitizePetConnect(raw) {
     doNotDisturb: Boolean(source.doNotDisturb),
     enabled: source.enabled !== false,
     friends,
+    hidePresence: Boolean(source.hidePresence),
     inviteCode: sanitizeText(source.inviteCode, 32, ""),
     inviteExpiresAt: Number(source.inviteExpiresAt) || 0,
     lastError: sanitizeText(source.lastError, 120, ""),
@@ -245,6 +247,24 @@ function sanitizeId(value) {
     .replace(/[^a-z0-9_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 40) || "pet";
+}
+
+function shouldOpenPreferencesAtStartup() {
+  return !process.argv.some((arg) => arg === "--background" || arg === "--no-preferences" || arg === "--no-startup-home");
+}
+
+function packageImageUrl(item, relativePath) {
+  const imagePath = resolvePackageFile(item.dir, relativePath);
+  return imagePath && fs.existsSync(imagePath) ? pathToFileURL(imagePath).href : "";
+}
+
+function packagePortraitUrl(item) {
+  return [
+    item.manifest?.portrait,
+    item.manifest?.thumbnail,
+    "frames/00_idle_00.png",
+    item.manifest?.preview || "preview.png",
+  ].map((candidate) => candidate && packageImageUrl(item, candidate)).find(Boolean) || pathToFileURL(item.spritesheetPath).href;
 }
 
 function getUserPetsDir() {
@@ -971,14 +991,24 @@ function setPetConnect(nextPetConnect) {
 
 function recordPetConnectMessage(message) {
   const petConnect = sanitizePetConnect(settings.petConnect);
+  const now = Date.now();
   const nextMessage = {
     direction: message.direction === "outgoing" ? "outgoing" : "incoming",
     friendName: sanitizeText(message.friendName, 32, "朋友"),
     friendPetName: sanitizeText(message.friendPetName, 32, "朋友的桌宠"),
     muted: Boolean(message.muted),
-    receivedAt: Date.now(),
+    receivedAt: Number(message.receivedAt) || now,
     text: sanitizeText(message.text, 140, DEFAULT_SETTINGS.petConnect.outgoingMessage),
   };
+  const duplicate = petConnect.recentMessages.find((recent) =>
+    recent.direction === nextMessage.direction
+    && recent.friendName === nextMessage.friendName
+    && recent.friendPetName === nextMessage.friendPetName
+    && recent.text === nextMessage.text
+    && Math.abs(now - recent.receivedAt) < 5000
+  );
+  if (duplicate) return duplicate;
+
   settings.petConnect = {
     ...petConnect,
     recentMessages: [nextMessage, ...petConnect.recentMessages].slice(0, 12),
@@ -1016,6 +1046,7 @@ function getPetConnectProfile() {
   const petConnect = sanitizePetConnect(settings.petConnect);
   return {
     displayName: petConnect.displayName || settings.petName || "桌宠用户",
+    hidePresence: petConnect.hidePresence,
     petName: settings.petName || petManifest?.displayName || "我的桌宠",
     status: petConnect.doNotDisturb ? "dnd" : petConnect.status,
   };
@@ -1043,6 +1074,22 @@ function updatePetConnectFriends(friends = []) {
   settings.petConnect = sanitizePetConnect({
     ...petConnect,
     friends: mergedFriends,
+    selectedFriendId,
+  });
+  scheduleSaveSettings();
+  sendSettingsChanged();
+  broadcastFriendsOnline();
+}
+
+function removePetConnectFriendLocal(friendId) {
+  const petConnect = sanitizePetConnect(settings.petConnect);
+  const friends = petConnect.friends.filter((friend) => friend.userId !== friendId);
+  const selectedFriendId = friends.some((friend) => friend.userId === petConnect.selectedFriendId)
+    ? petConnect.selectedFriendId
+    : friends[0]?.userId || "";
+  settings.petConnect = sanitizePetConnect({
+    ...petConnect,
+    friends,
     selectedFriendId,
   });
   scheduleSaveSettings();
@@ -1150,6 +1197,16 @@ function handlePetConnectPayload(payload) {
       break;
     case "friend-added":
       updatePetConnectFriends(payload.friends || (payload.friend ? [payload.friend] : []));
+      break;
+    case "friend-removed":
+      if (Array.isArray(payload.friends)) {
+        updatePetConnectFriends(payload.friends);
+      } else {
+        removePetConnectFriendLocal(payload.removedUserId);
+      }
+      break;
+    case "friend-blocked":
+      updatePetConnectFriends(payload.friends || []);
       break;
     case "invite-created":
       settings.petConnect = sanitizePetConnect({
@@ -1466,10 +1523,36 @@ async function sendPetConnectUserMessage(payload = {}) {
   if (!text) throw new Error("消息不能为空。");
   await waitForPetConnectReady();
   const result = await requestPetConnect("send-message", { text, toUserId });
+  const targetFriend = sanitizePetConnect(settings.petConnect).friends.find((friend) => friend.userId === toUserId);
+  recordPetConnectMessage({
+    direction: "outgoing",
+    friendName: targetFriend?.localAlias || targetFriend?.displayName || "朋友",
+    friendPetName: targetFriend?.petName || "朋友的桌宠",
+    muted: false,
+    text,
+  });
   return {
     ...getPreferencesConfig(),
     delivered: result.delivered,
   };
+}
+
+async function removePetConnectFriend(payload = {}) {
+  const userId = sanitizeText(payload.userId, 80);
+  if (!userId) throw new Error("请选择关系对象。");
+  await waitForPetConnectReady();
+  const result = await requestPetConnect("remove-friend", { userId });
+  updatePetConnectFriends(result.friends || []);
+  return getPreferencesConfig();
+}
+
+async function blockPetConnectFriend(payload = {}) {
+  const userId = sanitizeText(payload.userId, 80);
+  if (!userId) throw new Error("请选择关系对象。");
+  await waitForPetConnectReady();
+  const result = await requestPetConnect("block-user", { userId });
+  updatePetConnectFriends(result.friends || []);
+  return getPreferencesConfig();
 }
 
 async function copyPetConnectInviteCode() {
@@ -1705,8 +1788,10 @@ function openNameWindow() {
 
 function openPreferencesWindow() {
   if (preferencesWindow && !preferencesWindow.isDestroyed()) {
+    if (preferencesWindow.isMinimized()) preferencesWindow.restore();
     preferencesWindow.show();
     preferencesWindow.focus();
+    preferencesWindow.moveTop();
     return;
   }
 
@@ -1715,12 +1800,13 @@ function openPreferencesWindow() {
   prefsWasSaved = false;
 
   preferencesWindow = new BrowserWindow({
-    width: 1120,
-    height: 760,
+    width: 1487,
+    height: 1058,
     title: "Desktop Pet Connect",
-    minWidth: 920,
-    minHeight: 640,
+    minWidth: 1180,
+    minHeight: 820,
     show: false,
+    autoHideMenuBar: true,
     backgroundColor: "#101010",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -1731,7 +1817,12 @@ function openPreferencesWindow() {
 
   preferencesWindow.setMenu(null);
   preferencesWindow.loadFile(path.join(__dirname, "preferences", "index.html"));
-  preferencesWindow.once("ready-to-show", () => preferencesWindow.show());
+  preferencesWindow.once("ready-to-show", () => {
+    preferencesWindow.center();
+    preferencesWindow.show();
+    preferencesWindow.focus();
+    preferencesWindow.moveTop();
+  });
   preferencesWindow.on("closed", () => {
     if (!prefsWasSaved) {
       if (prefsPreviewOriginalScale !== null && Math.abs(settings.scale - prefsPreviewOriginalScale) >= 0.01) {
@@ -1820,6 +1911,7 @@ function getPreferencesConfig() {
         if (previewPath && fs.existsSync(previewPath)) return pathToFileURL(previewPath).href;
         return pathToFileURL(item.spritesheetPath).href;
       })(),
+      portraitUrl: packagePortraitUrl(item),
       source: item.source,
       spriteUrl: pathToFileURL(item.spritesheetPath).href,
       stateNames: summarizeStateNames(item.manifest?.states),
@@ -2877,6 +2969,10 @@ app.whenReady().then(() => {
 
   ipcMain.handle("preferences:connect-send-message", (_event, payload) => sendPetConnectUserMessage(payload || {}));
 
+  ipcMain.handle("preferences:connect-remove-friend", (_event, payload) => removePetConnectFriend(payload || {}));
+
+  ipcMain.handle("preferences:connect-block-friend", (_event, payload) => blockPetConnectFriend(payload || {}));
+
   ipcMain.handle("preferences:connect-create-test-friend", (_event, payload) => createRealPetConnectTestFriend(payload || {}));
 
   ipcMain.handle("preferences:connect-test-friend-message", (_event, payload) => sendPetConnectTestFriendMessage(payload || {}));
@@ -2963,6 +3059,9 @@ app.whenReady().then(() => {
   createTray();
   registerGlobalShortcuts();
   startPetConnect();
+  if (shouldOpenPreferencesAtStartup()) {
+    setTimeout(openPreferencesWindow, 350);
+  }
 
   screen.on("display-metrics-changed", () => {
     if (!mainWindow) return;
