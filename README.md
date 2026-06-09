@@ -50,10 +50,16 @@ python pet_runtime.py --scale 1
 
 ```powershell
 npm run lint
+npm run build:portable
+npm run build:win
 ```
 
 The lint command currently performs JavaScript syntax checks across the Electron
 runtime, preferences UI, import preview, and Pet Connect server.
+
+Build output is written to `release/`. Use `npm run build:portable` for the
+first friend-test executable, or `npm run build:win` when you need both the
+installer and portable build.
 
 ## Companion Package Contract
 
@@ -78,4 +84,5 @@ relationship companion product. Current priorities are:
 - lightweight privacy and quiet-mode controls
 
 See `docs/product-blueprint.md`, `docs/pet-connect.md`, and
-`docs/project-roadmap.md` for the broader plan.
+`docs/project-roadmap.md` for the broader plan. See
+`docs/friend-test-deployment.md` for the current Windows friend-test checklist.

@@ -4,14 +4,63 @@
   "private": true,
   "description": "A relationship-centered Windows desktop companion app with invite-based real-time connection.",
   "license": "MIT",
+  "author": "Desktop Pet Connect Contributors",
   "main": "src/main.js",
   "scripts": {
+    "build:dir": "electron-builder --dir --win --x64",
+    "build:portable": "electron-builder --win portable --x64",
+    "build:win": "electron-builder --win nsis portable --x64",
     "start": "electron .",
     "start:pet-connect": "node server/pet-connect-server.js",
     "lint": "node --check src/main.js && node --check src/preload.js && node --check src/renderer/pet.js && node --check src/dialog/name.js && node --check src/preferences/preferences.js && node --check src/import-preview/preview.js && node --check server/pet-connect-server.js"
   },
+  "build": {
+    "appId": "app.desktoppet.connect",
+    "productName": "Desktop Pet Connect",
+    "asar": false,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "assets/**/*",
+      "server/**/*",
+      "src/**/*",
+      "LICENSE",
+      "README.md",
+      "package.json"
+    ],
+    "extraMetadata": {
+      "main": "src/main.js"
+    },
+    "win": {
+      "icon": "build-resources/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Desktop Pet Connect"
+    }
+  },
   "devDependencies": {
-    "electron": "^39.8.10"
+    "electron": "^39.8.10",
+    "electron-builder": "^26.15.2",
+    "lucide-static": "^1.17.0"
   },
   "dependencies": {
     "ws": "^8.20.0"
